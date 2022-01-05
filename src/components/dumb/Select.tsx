@@ -7,7 +7,7 @@ export const StyledSelect = styled.select`
     font-weight: bold;
     font-size: 14px;
     line-height: 17px;
-    background: #FFFFFF;
+    background-color: #FFFFFF;
     border: 1px solid #D0E2F6;
     box-sizing: border-box;
     border-radius: 8px;
@@ -32,18 +32,23 @@ export const StyledSelect = styled.select`
 
 interface SelectProps {
     currentSelect: string;
-    departments: string[];
+    items: string[];
     onChange: (value: string) => void;
   }
 
 
-export const Select: FC<SelectProps> = ({currentSelect, departments, onChange}: SelectProps) => {
+export const Select: FC<SelectProps> = ({currentSelect, items, onChange}: SelectProps) => {
     return (
         <StyledSelect onChange={(e) => onChange(e.target.value)}>
             <option hidden>Choose department</option>
-            {departments.map((department) => {
+            {items.map((department) => {
                return (
-                    <option key={department} hidden={currentSelect === department && true}>{department}</option>
+                    <option
+                        key={department}
+                        hidden={currentSelect === department}
+                    >
+                        {department}
+                    </option>
                )
             })}
         </StyledSelect>

@@ -5,16 +5,18 @@ export const StyledTabsContainer = styled.ul`
     display: flex;
     margin: 0;
     padding: 0;
+    border-bottom: 1px solid #DEECF9;
 `;
 
 interface StyledTabProps {
     marginTop?: string;
     borderBottom?: string;
     color?: string;
+    isActive?: boolean;
   }
 
 export const StyledTab = styled.li<StyledTabProps>`
-    font-family: Lato;
+    font-family: Lato, Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -25,18 +27,10 @@ export const StyledTab = styled.li<StyledTabProps>`
     list-style: none;
     padding: 0 16px 8px;
     border-radius: 2px 2px 0px 0px;
-    margin-bottom: -2px;
-    user-select: none;
+    margin-bottom: -1px;
     cursor: pointer;
-    margin-top: ${props => props.marginTop};
-    border-bottom: ${props => props.borderBottom};
-    color: ${props => props.color};
-`;
-
-export const StyledLine = styled.div`
-    width: 1110px;
-    border: 1px solid #DEECF9;
-    margin: 0 auto;
+    border-bottom: ${props => props.isActive ? '4px solid #3386D9' : ''};
+    color: ${props => props.isActive ? '#3386D9' : '#404851'};
 `;
 
 interface TabsProps {
@@ -53,17 +47,14 @@ export const Tabs: FC<TabsProps> = ({tabs, activeTab, onChange}: TabsProps) => {
                     return  (
                         <StyledTab
                             key={tab}
-                            marginTop="32px"
                             onClick={() => onChange(tab)}
-                            borderBottom={activeTab === tab ? '4px solid #3386D9' : ''}
-                            color={activeTab === tab ? '#3386D9' : '#404851'}
+                            isActive={activeTab === tab}
                         >
                             {tab}
                         </StyledTab>
                     )
                 })}
             </StyledTabsContainer>
-            <StyledLine/>
         </>
     )
 }
