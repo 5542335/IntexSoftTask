@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FC, ReactChild, ReactElement } from "react";
 
 export const StyledTitle = styled.div`
-    font-family: Lato;
+    font-family: Lato, Arial, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 36px;
