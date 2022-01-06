@@ -41,20 +41,18 @@ interface TabsProps {
 
 export const Tabs: FC<TabsProps> = ({tabs, activeTab, onChange}: TabsProps) => {
     return (
-        <>
-            <StyledTabsContainer>
-                {tabs.map((tab) => {
-                    return  (
-                        <StyledTab
-                            key={tab}
-                            onClick={() => onChange(tab)}
-                            isActive={activeTab === tab}
-                        >
-                            {tab}
-                        </StyledTab>
-                    )
-                })}
-            </StyledTabsContainer>
-        </>
+        <StyledTabsContainer>
+            {tabs.map((tab) => {
+                return  (
+                    <StyledTab
+                        key={tab}
+                        onClick={() => onChange(tab)}
+                        isActive={activeTab === tab}
+                    >
+                        {tab}
+                    </StyledTab>
+                )
+            })}
+        </StyledTabsContainer>
     )
 }
