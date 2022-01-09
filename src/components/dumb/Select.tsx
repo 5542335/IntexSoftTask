@@ -39,10 +39,16 @@ export const StyledSelect = styled.div<StyledSelectProps>`
 
 export const StyledOptionsWrapper = styled.div`
     display: flex;
+    position: absolute;
     flex-direction: column;
-    width: 270px;
+    width: 100%;
     max-height: 144px;
     overflow-x: hidden;
+`;
+
+const StyledSelectWrapper = styled.div`
+    max-width: 270px;
+    width: 100%;
 `;
 
 interface SelectProps {
@@ -60,7 +66,7 @@ const handleClickOption = (selectedOption: string) => () => {
 };
 
     return (
-        <>
+        <StyledSelectWrapper>
             <StyledSelect onClick={() => setIsOpenOptions(!isOpenOptions)}>
                 <StyledText>{currentSelect}</StyledText> 
                 <img src="arrowButton.png" alt='choose department button'/>
@@ -73,6 +79,7 @@ const handleClickOption = (selectedOption: string) => () => {
                 {isOpenOptions && items.map((department) => {
                     return (
                         <StyledSelect
+                            key={department}
                             onClick={handleClickOption(department)}
                             hide={department === currentSelect}
                         >
@@ -81,6 +88,6 @@ const handleClickOption = (selectedOption: string) => () => {
                     )
                 })}
             </StyledOptionsWrapper>
-        </>
+        </StyledSelectWrapper>
     )
 }

@@ -2,11 +2,22 @@ import styled from "styled-components";
 
 import { Title } from "../components/dumb/Title";
 import { Tabs } from "../components/dumb/Tabs";
+import { SearchBar } from "../components/smart/SearchBar";
 import { Select } from "../components/dumb/Select";
 import { StyledTabsContainer } from "../components/dumb/Tabs";
 import { FC, useState } from "react";
 
-const StyledWrapper = styled.div`
+const StyledSearchAndSelect = styled.section`
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 76px;
+    background-color: #F5F9FD;
+    border-radius: 8px;
+`;
+
+const StyledPageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     margin: 111px auto 23px;
@@ -14,6 +25,9 @@ const StyledWrapper = styled.div`
 
     ${StyledTabsContainer} {
         margin-top: 32px;
+    }
+    ${StyledSearchAndSelect} {
+        margin-top: 16px;
     }
 `;
 
@@ -25,10 +39,13 @@ export const EmployeePage: FC = () => {
     const [currentSelectDep, setCurrentSelectDep] = useState('Choose department');
 
     return (
-        <StyledWrapper>
+        <StyledPageWrapper>
             <Title>List of employees</Title>
             <Tabs tabs={workPlace} activeTab={currentWorkPlace} onChange={setCurrentWorkPlace} />
-            <Select currentSelect={currentSelectDep} items={departments} onChange={setCurrentSelectDep} />
-        </StyledWrapper>
+            <StyledSearchAndSelect>
+                <SearchBar />
+                <Select currentSelect={currentSelectDep} items={departments} onChange={setCurrentSelectDep} />
+            </StyledSearchAndSelect>
+        </StyledPageWrapper>
     )
 }
