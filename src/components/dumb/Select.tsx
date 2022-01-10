@@ -1,93 +1,94 @@
-import { FC, useState } from "react";
-import styled from "styled-components";
+import { FC, useCallback, useState } from 'react';
+import styled from 'styled-components';
 
-export const StyledText = styled.p`
-    font-family: Lato, Arial, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 17px;
-    letter-spacing: 0.02em;
+export const StyledIcon = styled.img`
+    margin-left: 10px;
 `;
 
 interface StyledSelectProps {
     hide?: boolean;
 }
 
-export const StyledSelect = styled.div<StyledSelectProps>`
+export const StyledSelect = styled.button<StyledSelectProps>`
+  font-family: Lato, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  
     display: flex;
-    max-width: 270px;
-    min-height: 48px;
     justify-content: center;
     align-items: center;
-    
-    background-color: #FFFFFF;
+    padding: 0;
+    background-color: transparent;
     color: #3386D9;
-    border: 1px solid #D0E2F6;
     box-sizing: border-box;
-    border-radius: 8px;
+    border: none;
     cursor: pointer;
-    :hover {
-        border-color: #3386D9;
+    :before {
+      content: 'Choose department';
     }
-    display: ${props => props.hide ? 'none' : ''};
-
-    ${StyledText} {
-        margin-right: 14px;
+    @media (max-width: 480px) {
+      :before {
+        content: 'Department';
+      }
     }
+  
+    display: ${(props) => (props.hide ? 'none' : '')};
 `;
 
-export const StyledOptionsWrapper = styled.div`
+export const StyledOptions = styled.div`
     display: flex;
     position: absolute;
     flex-direction: column;
-    width: 100%;
+    width: 270px;
     max-height: 144px;
     overflow-x: hidden;
 `;
 
-const StyledSelectWrapper = styled.div`
-    max-width: 270px;
-    width: 100%;
+export const StyledSelectWrapper = styled.div`
 `;
 
 interface SelectProps {
     currentSelect: string;
     items: string[];
+    // eslint-disable-next-line no-unused-vars
     onChange: (value: string) => void;
   }
 
-export const Select: FC<SelectProps> = ({currentSelect, items, onChange}: SelectProps) => {
-    const [isOpenOptions, setIsOpenOptions] = useState(false);
+// eslint-disable-next-line no-unused-vars
+export const Select: FC<SelectProps> = ({ currentSelect, items, onChange }: SelectProps) => {
+  const [isOpenOptions, setIsOpenOptions] = useState(false);
 
-const handleClickOption = (selectedOption: string) => () => {
-    onChange(selectedOption || 'Choose department');
-    setIsOpenOptions(false);
+  // const handleClickOption = (selectedOption: string) => () => {
+  //   onChange(selectedOption || 'Choose department');
+  //   setIsOpenOptions(false);
+  // };
+
+  const handleOpenOptions = useCallback(() => {
+    setIsOpenOptions(!isOpenOptions);
+  }, [isOpenOptions]);
+
+  return (
+    <StyledSelectWrapper>
+      <StyledSelect onClick={handleOpenOptions}>
+        <StyledIcon src="arrowButton.png" alt="choose department button" />
+      </StyledSelect>
+      {/* <StyledOptions> */}
+      {/*  {currentSelect !== 'Choose department' */}
+      {/*              && isOpenOptions */}
+      {/*              && <div onClick={handleClickOption('')}>All</div>} */}
+      {/*  {isOpenOptions && items.map((department) => ( */}
+      {/*    <div */}
+      {/*      key={department} */}
+      {/*      onClick={handleClickOption(department)} */}
+      {/*      hide={department === currentSelect} */}
+      {/*    > */}
+      {/*      {department} */}
+      {/*    </div> */}
+      {/*  ))} */}
+      {/* </StyledOptions> */}
+    </StyledSelectWrapper>
+  );
 };
-
-    return (
-        <StyledSelectWrapper>
-            <StyledSelect onClick={() => setIsOpenOptions(!isOpenOptions)}>
-                <StyledText>{currentSelect}</StyledText> 
-                <img src="arrowButton.png" alt='choose department button'/>
-            </StyledSelect>
-            <StyledOptionsWrapper>
-                {currentSelect !== 'Choose department'
-                    && isOpenOptions
-                    && <StyledSelect onClick={handleClickOption('')}>All</StyledSelect>
-                }
-                {isOpenOptions && items.map((department) => {
-                    return (
-                        <StyledSelect
-                            key={department}
-                            onClick={handleClickOption(department)}
-                            hide={department === currentSelect}
-                        >
-                            {department}
-                        </StyledSelect>
-                    )
-                })}
-            </StyledOptionsWrapper>
-        </StyledSelectWrapper>
-    )
-}

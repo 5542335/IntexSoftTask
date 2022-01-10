@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { FC, ReactChild, ReactElement } from "react";
+import styled from 'styled-components';
+import { FC } from 'react';
 
 export const StyledTitle = styled.div`
     font-family: Lato, Arial, sans-serif;
@@ -8,19 +8,11 @@ export const StyledTitle = styled.div`
     font-size: 36px;
     line-height: 43px;
     letter-spacing: 0.02em;
-    font-feature-settings: 'ss09' on, 'liga' off;
-    color: ${props => props.color};
+    margin: 0;
+    :before {
+      content: 'List of employees';
+    }
+    
 `;
 
-interface TitleProps {
-    children: ReactChild;
-}
-
-
-export const Title: FC<TitleProps> = ({children}: TitleProps): ReactElement => {
-    return (
-        <StyledTitle>
-            {children}
-        </StyledTitle>
-    )
-}
+export const Title: FC = () => <StyledTitle />;
