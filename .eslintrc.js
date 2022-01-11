@@ -1,12 +1,16 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es6: true,
+    node: true,
   },
   extends: [
-    'plugin:react/recommended',
     'airbnb',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
+    'prettier',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -16,17 +20,22 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-    'react-hooks',
-    'jsx-a11y',
-  ],
+  plugins: ['react', '@typescript-eslint', 'react-hooks', 'jsx-a11y', 'prettier'],
   rules: {
+    'prettier/prettier': [
+      2,
+      {
+        printWidth: 120,
+        singleQuote: true,
+        trailingComma: 'all',
+      },
+    ],
+    quotes: [2, 'single'],
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 1,
     'import/prefer-default-export': 0,
     'react/react-in-jsx-scope': 0,
+    'object-curly-newline': 0,
     'react/jsx-no-bind': [
       2,
       {
@@ -54,6 +63,20 @@ module.exports = {
       {
         namedComponents: 'arrow-function',
         unnamedComponents: 'arrow-function',
+      },
+    ],
+    'max-len': [
+      2,
+      {
+        code: 120,
+        comments: 120,
+        ignoreComments: false,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        ignoreTrailingComments: true,
+        ignoreUrls: true,
+        tabWidth: 2,
       },
     ],
   },
