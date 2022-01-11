@@ -45,7 +45,6 @@ const StyledSearchAndSelect = styled.div`
   display: flex;
   box-sizing: border-box;
   position: relative;
-  padding: 0 16px;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -58,23 +57,24 @@ const StyledSearchAndSelect = styled.div`
     background-color: transparent;
     align-items: flex-end;
 
-    ${StyledSearchBarWrapper} {
-      margin: 24px 0;
-    }
-
     ${StyledSelectWrapper} {
-      margin: 28px 6px 0 0;
+      margin: 28px 16px 0 0;
     }
     ${StyledOptionsWrapper} {
       top: 20px;
     }
     ${StyledSelect} {
-      align-self: flex-end;
+      align-self: flex-start;
+    }
+    ${StyledSearchBarWrapper} {
+      padding: 24px 16px;
+      border-bottom: 1px solid rgba(64, 72, 81, 0.1);
     }
   }
 
   @media (min-width: 481px) {
     margin-top: 16px;
+    padding: 0 16px;
 
     ${StyledSelect} {
       min-width: 270px;

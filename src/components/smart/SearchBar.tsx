@@ -17,7 +17,6 @@ export const StyledInput = styled.input`
   font-size: 14px;
   line-height: 130%;
   letter-spacing: 0.02em;
-  color: #008080;
 
   width: 100%;
   height: 30px;
@@ -26,7 +25,7 @@ export const StyledInput = styled.input`
   box-sizing: border-box;
 `;
 
-export const StyledSearchBarWrapper = styled.div`
+export const StyledSearchBar = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
@@ -42,6 +41,12 @@ export const StyledSearchBarWrapper = styled.div`
   ${StyledLoader} {
     margin: 0 10px 10px;
   }
+`;
+
+export const StyledSearchBarWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 export const SearchBar: FC = () => {
@@ -62,11 +67,13 @@ export const SearchBar: FC = () => {
 
   return (
     <StyledSearchBarWrapper>
-      <StyledLabel htmlFor="search-input">
-        <StyledSearchIcon src="search.svg" alt="search icon" />
-      </StyledLabel>
-      <StyledInput id="search-input" maxLength={60} onChange={handleInput} placeholder="Search of employees" />
-      {showLoader && <StyledLoader />}
+      <StyledSearchBar>
+        <StyledLabel htmlFor="search-input">
+          <StyledSearchIcon src="search.svg" alt="search icon" />
+        </StyledLabel>
+        <StyledInput id="search-input" maxLength={60} onChange={handleInput} placeholder="Search of employees" />
+        {showLoader && <StyledLoader />}
+      </StyledSearchBar>
     </StyledSearchBarWrapper>
   );
 };
