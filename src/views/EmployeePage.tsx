@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 import { FC, useState } from 'react';
+
 import { StyledTitle, Title } from '../components/dumb/Title';
 import { Tabs, StyledTabsContainer } from '../components/dumb/Tabs';
 import { SearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
-import { Select, StyledSelectWrapper, StyledSelect } from '../components/dumb/Select';
+import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
 
 const StyledTitleAndTabs = styled.header`
   display: flex;
@@ -43,6 +44,7 @@ const StyledTitleAndTabs = styled.header`
 const StyledSearchAndSelect = styled.div`
   display: flex;
   box-sizing: border-box;
+  position: relative;
   padding: 0 16px;
   justify-content: space-between;
   align-items: center;
@@ -63,6 +65,12 @@ const StyledSearchAndSelect = styled.div`
     ${StyledSelectWrapper} {
       margin: 28px 6px 0 0;
     }
+    ${StyledOptionsWrapper} {
+      top: 20px;
+    }
+    ${StyledSelect} {
+      align-self: flex-end;
+    }
   }
 
   @media (min-width: 481px) {
@@ -77,6 +85,13 @@ const StyledSearchAndSelect = styled.div`
       box-sizing: border-box;
       border-radius: 8px;
       margin-left: 16px;
+      @media (min-width: 481px) and (max-width: 600px) {
+        padding: 15px 40px 15px 35px;
+        min-width: 230px;
+      }
+    }
+    ${StyledOptionsWrapper} {
+      top: 48px;
     }
   }
 `;
@@ -96,8 +111,10 @@ const workPlace = ['All', 'Mostovaya', 'Bogutskogo', 'DNT', 'Gaspadarchaya', 'Bo
 const departments = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
 export const EmployeePage: FC = () => {
+  const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
+
   const [currentWorkPlace, setCurrentWorkPlace] = useState(workPlace[0]);
-  const [currentSelectDep, setCurrentSelectDep] = useState('');
+  const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
 
   return (
     <StyledPageWrapper>
@@ -107,7 +124,12 @@ export const EmployeePage: FC = () => {
       </StyledTitleAndTabs>
       <StyledSearchAndSelect>
         <SearchBar />
-        <Select currentSelect={currentSelectDep} items={departments} onChange={setCurrentSelectDep} />
+        <Select
+          currentSelect={currentSelectDep}
+          items={departments}
+          onChange={setCurrentSelectDep}
+          selectButtonText={selectButtonText}
+        />
       </StyledSearchAndSelect>
     </StyledPageWrapper>
   );

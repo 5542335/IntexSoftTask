@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { StyledLoader } from '../dumb/Loader';
 
 const StyledSearchIcon = styled.img`
   width: 24px;
@@ -23,32 +24,6 @@ export const StyledInput = styled.input`
   outline: none;
   border: none;
   box-sizing: border-box;
-`;
-
-export const StyledLoader = styled.div`
-  display: inline-block;
-  position: relative;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  :after {
-    content: ' ';
-    display: block;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 6px solid;
-    border-color: #d0e2f6 transparent;
-    animation: loader 1.2s linear infinite;
-  }
-  @keyframes loader {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 export const StyledSearchBarWrapper = styled.div`

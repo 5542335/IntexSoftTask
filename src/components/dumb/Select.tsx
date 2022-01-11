@@ -1,15 +1,15 @@
 import { FC, useCallback, useState } from 'react';
 import styled from 'styled-components';
 
-export const StyledIcon = styled.img`
+const StyledIcon = styled.img`
   margin-left: 10px;
 `;
 
-interface StyledSelectProps {
-  hide?: boolean;
+interface StyledOptionsProps {
+  hidden?: boolean;
 }
 
-export const StyledSelect = styled.button<StyledSelectProps>`
+export const StyledSelect = styled.button`
   font-family: Lato, Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -26,41 +26,65 @@ export const StyledSelect = styled.button<StyledSelectProps>`
   box-sizing: border-box;
   border: none;
   cursor: pointer;
-  :before {
-    content: 'Choose department';
-  }
-  @media (max-width: 480px) {
-    :before {
-      content: 'Department';
-    }
-  }
-
-  display: ${(props) => (props.hide ? 'none' : '')};
 `;
 
-export const StyledOptions = styled.div`
+export const StyledOption = styled.div<StyledOptionsProps>`
+  font-family: Lato, Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  padding: 16px 0 16px 24px;
+  margin: 0;
+  list-style-type: none;
+  :hover {
+    color: #3386d9;
+  }
+
+  display: ${(props) => (props.hidden ? 'none' : '')};
+`;
+
+export const StyledOptionsWrapper = styled.ul<StyledOptionsProps>`
   display: flex;
   position: absolute;
   flex-direction: column;
-  width: 270px;
-  max-height: 144px;
+  padding: 0;
+  margin: 0;
+  align-self: flex-end;
+  min-width: 160px;
+  max-height: 150px;
   overflow-x: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+  display: ${(props) => (props.hidden ? 'none' : '')};
 `;
 
-export const StyledSelectWrapper = styled.div``;
+export const StyledSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
 
 interface SelectProps {
   currentSelect: string;
   items: string[];
   // eslint-disable-next-line no-unused-vars
   onChange: (value: string) => void;
+  selectButtonText: string;
 }
 
-export const Select: FC<SelectProps> = ({ currentSelect, items, onChange }: SelectProps) => {
+export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, selectButtonText }: SelectProps) => {
   const [isOpenOptions, setIsOpenOptions] = useState(false);
 
   const handleClickOption = (selectedOption: string) => () => {
-    onChange(selectedOption || 'Choose department');
+    onChange(selectedOption || selectButtonText);
     setIsOpenOptions(false);
   };
 
@@ -71,19 +95,24 @@ export const Select: FC<SelectProps> = ({ currentSelect, items, onChange }: Sele
   return (
     <StyledSelectWrapper>
       <StyledSelect onClick={handleOpenOptions}>
-        <StyledIcon src="arrowButton.svg" alt="choose department button" />
+        {currentSelect}
+        <StyledIcon src={isOpenOptions ? 'arrowUp.svg' : 'arrowDown.svg'} alt="choose department button" />
       </StyledSelect>
-      <StyledOptions>
-        {currentSelect !== 'Choose department' && isOpenOptions && (
-          <StyledSelect onClick={handleClickOption('')}>All</StyledSelect>
+      <StyledOptionsWrapper hidden={!isOpenOptions}>
+        {currentSelect !== ('Choose department' || 'Department') && isOpenOptions && (
+          <StyledOption onClick={handleClickOption('')}>All</StyledOption>
         )}
         {isOpenOptions &&
           items.map((department) => (
-            <StyledSelect key={department} onClick={handleClickOption(department)} hide={department === currentSelect}>
+            <StyledOption
+              key={department}
+              onClick={handleClickOption(department)}
+              hidden={department === currentSelect}
+            >
               {department}
-            </StyledSelect>
+            </StyledOption>
           ))}
-      </StyledOptions>
+      </StyledOptionsWrapper>
     </StyledSelectWrapper>
   );
 };
