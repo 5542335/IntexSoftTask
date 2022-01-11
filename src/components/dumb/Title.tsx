@@ -9,9 +9,9 @@ export const StyledTitle = styled.div`
   line-height: 43px;
   letter-spacing: 0.02em;
   margin: 0;
-  :before {
-    content: 'List of employees';
-  }
 `;
 
-export const Title: FC = () => <StyledTitle />;
+export const Title: FC = () => {
+  const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
+  return <StyledTitle>{titleText}</StyledTitle>;
+};

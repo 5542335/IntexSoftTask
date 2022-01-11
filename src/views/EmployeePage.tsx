@@ -21,10 +21,6 @@ const StyledTitleAndTabs = styled.header`
       font-size: 18px;
       line-height: 140%;
       text-align: center;
-
-      :before {
-        content: 'Employees list';
-      }
     }
   }
 
