@@ -6,6 +6,20 @@ import { StyledTitle, Title } from '../components/dumb/Title';
 import { Tabs, StyledTabsContainer } from '../components/dumb/Tabs';
 import { SearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
 import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
+import { TableHeader } from '../components/smart/TableHeader';
+import { TableBody } from '../components/dumb/TableBody';
+import { workPlace, departments } from '../components/data';
+
+const StyledPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 111px auto 23px;
+  max-width: 1110px;
+
+  @media (max-width: 480px) {
+    margin: 15px auto 5px;
+  }
+`;
 
 const StyledTitleAndTabs = styled.header`
   display: flex;
@@ -92,19 +106,10 @@ const StyledSearchAndSelect = styled.div`
   }
 `;
 
-const StyledPageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 111px auto 23px;
-  max-width: 1110px;
-
-  @media (max-width: 480px) {
-    margin: 15px auto 5px;
-  }
+const StyledTable = styled.div`
+  width: 100%;
+  margin-top: 24px;
 `;
-
-const workPlace = ['All', 'Mostovaya', 'Bogutskogo', 'DNT', 'Gaspadarchaya', 'Bogdanovicha'];
-const departments = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
 export const EmployeePage: FC = () => {
   const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
@@ -127,6 +132,10 @@ export const EmployeePage: FC = () => {
           selectButtonText={selectButtonText}
         />
       </StyledSearchAndSelect>
+      <StyledTable>
+        <TableHeader />
+        <TableBody />
+      </StyledTable>
     </StyledPageWrapper>
   );
 };
