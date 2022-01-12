@@ -108,6 +108,7 @@ const StyledSearchAndSelect = styled.div`
 
 const StyledTable = styled.div`
   width: 100%;
+  flex-direction: column;
   margin-top: 24px;
 `;
 

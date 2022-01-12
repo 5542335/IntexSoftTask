@@ -26,6 +26,7 @@ const StyledTitleImage = styled.img`
 
 export const TableHeader = () => {
   const tableColumnsTitle = ['Name', 'Position', 'Department', 'Workplace'];
+  const columnsWidth = [236, 162, 136, 576];
 
   const headerItemsWithIcon = tableColumnsTitle.map((title) => (
     <StyledTitleItemWrapper key={title}>
@@ -34,5 +35,5 @@ export const TableHeader = () => {
     </StyledTitleItemWrapper>
   ));
 
-  return <TableRow columns={headerItemsWithIcon} columnsWidth={[236, 162, 136, 576]} />;
+  return <TableRow columns={headerItemsWithIcon} columnsWidth={columnsWidth} />;
 };
