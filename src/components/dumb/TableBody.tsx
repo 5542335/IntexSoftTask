@@ -8,12 +8,8 @@ interface StyledBodyTextProps {
 }
 
 const StyledBodyText = styled.p<StyledBodyTextProps>`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
   font-size: 14px;
   line-height: 17px;
-  letter-spacing: 0.02em;
   color: ${(props) => (props.textColor ? `${props.textColor}` : '#404851')};
 
   margin: 0;

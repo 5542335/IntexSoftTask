@@ -10,12 +10,8 @@ interface StyledOptionsProps {
 }
 
 export const StyledSelect = styled.button`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
   font-size: 14px;
   line-height: 17px;
-  letter-spacing: 0.02em;
 
   display: flex;
   justify-content: center;
@@ -29,12 +25,8 @@ export const StyledSelect = styled.button`
 `;
 
 export const StyledOption = styled.div<StyledOptionsProps>`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
   font-size: 14px;
   line-height: 17px;
-  letter-spacing: 0.02em;
   padding: 16px 0 16px 24px;
   margin: 0;
   list-style-type: none;

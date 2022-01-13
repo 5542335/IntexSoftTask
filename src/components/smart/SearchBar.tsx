@@ -12,11 +12,8 @@ const StyledLabel = styled.label`
 `;
 
 export const StyledInput = styled.input`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
   font-size: 14px;
   line-height: 130%;
-  letter-spacing: 0.02em;
 
   width: 100%;
   height: 30px;

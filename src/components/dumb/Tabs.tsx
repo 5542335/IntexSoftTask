@@ -26,12 +26,8 @@ export const StyledTabsContainer = styled.ul`
 `;
 
 const StyledTab = styled.li<StyledTabProps>`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
   font-size: 14px;
   line-height: 130%;
-  letter-spacing: 0.02em;
 
   display: flex;
   justify-content: center;

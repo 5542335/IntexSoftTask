@@ -8,12 +8,8 @@ const StyledTitleItemWrapper = styled.div`
 `;
 
 const StyledHeaderTitleText = styled.p`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
   font-size: 12px;
   line-height: 14px;
-  letter-spacing: 0.02em;
   color: #404851;
   user-select: none;
   margin: 0;
