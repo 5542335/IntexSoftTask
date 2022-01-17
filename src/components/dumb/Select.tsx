@@ -52,10 +52,12 @@ export const StyledOptionsWrapper = styled.ul<StyledOptionsProps>`
   box-sizing: border-box;
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
+  cursor: pointer;
   ::-webkit-scrollbar {
     width: 0;
   }
   display: ${(props) => (props.hidden ? 'none' : '')};
+  z-index: 1;
 `;
 
 export const StyledSelectWrapper = styled.div`

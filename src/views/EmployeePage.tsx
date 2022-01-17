@@ -6,9 +6,10 @@ import { StyledTitle, Title } from '../components/dumb/Title';
 import { Tabs, StyledTabsContainer } from '../components/dumb/Tabs';
 import { SearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
 import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
-import { TableHeader } from '../components/smart/TableHeader';
-import { TableBody } from '../components/dumb/TableBody';
-import { workPlace, departments } from '../components/data';
+import { workPlace, departments, users } from './data';
+import { Table } from '../components/smart/table/Table';
+import { useEmployeeColumns } from '../components/smart/table/hooks/useEmployeeColumns';
+import { getEmployeeTableHeader } from '../components/smart/table/employeeTableHeader';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -106,17 +107,15 @@ const StyledSearchAndSelect = styled.div`
   }
 `;
 
-const StyledTable = styled.div`
-  width: 100%;
-  flex-direction: column;
-  margin-top: 24px;
-`;
+const StyledTableWrapper = styled.div``;
 
 export const EmployeePage: FC = () => {
   const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
 
   const [currentWorkPlace, setCurrentWorkPlace] = useState(workPlace[0]);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
+  const employeeColumns = useEmployeeColumns();
+  const employeeTableHeader = getEmployeeTableHeader();
 
   return (
     <StyledPageWrapper>
@@ -133,10 +132,9 @@ export const EmployeePage: FC = () => {
           selectButtonText={selectButtonText}
         />
       </StyledSearchAndSelect>
-      <StyledTable>
-        <TableHeader />
-        <TableBody />
-      </StyledTable>
+      <StyledTableWrapper>
+        <Table data={users} columns={employeeColumns} columnTitles={employeeTableHeader} />
+      </StyledTableWrapper>
     </StyledPageWrapper>
   );
 };
