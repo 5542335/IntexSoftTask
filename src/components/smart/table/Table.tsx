@@ -20,11 +20,20 @@ import {
   StyledWorkplaceWrapper,
 } from './hooks/useEmployeeColumns';
 import { StyledTableItem, StyledTableRow } from './TableRow';
+import { Pagination, StyledArrowButton, StyledPaginationWrapper } from './Pagination';
 
 interface TableProps<T> extends TableBodyProps<T>, TableHeaderProps {}
 
 export const StyledTable = styled.div`
+  display: flex;
   flex-direction: column;
+  ${StyledPaginationWrapper} {
+    justify-content: flex-end;
+    margin: 22px 5px 30px 0;
+    ${StyledArrowButton} {
+      margin-left: 30px;
+    }
+  }
   @media (max-width: 360px) {
     ${StyledChip} {
       margin-top: 10px;
@@ -198,6 +207,7 @@ export const Table = <T,>({ data, columns, columnTitles }: TableProps<T>) => {
     <StyledTable>
       <TableHeader columnTitles={columnTitles} />
       <TableBody data={data} columns={columns} />
+      <Pagination />
     </StyledTable>
   );
 };
