@@ -1,20 +1,27 @@
 import React, { ChangeEvent, FC, useCallback, useState } from 'react';
 import styled from 'styled-components';
+
 import { StyledLoader } from '../dumb/Loader';
 
-const StyledSearchIcon = styled.img`
+interface SearchBarProps {
+  defaultInputValue: string;
+}
+
+const StyledSearchIcon = styled.div`
   width: 24px;
   height: 24px;
+  background-image: url('./search.svg');
+  background-repeat: no-repeat;
 `;
 
 const StyledLabel = styled.label`
   cursor: pointer;
 `;
 
-export const StyledInput = styled.input`
+const StyledInput = styled.input`
   font-size: 14px;
   line-height: 130%;
-
+  font-weight: 500;
   width: 100%;
   height: 30px;
   outline: none;
@@ -27,7 +34,7 @@ export const StyledSearchBar = styled.div`
   align-items: center;
   width: 100%;
   height: 48px;
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #d0e2f6;
   box-sizing: border-box;
   border-radius: 8px;
@@ -43,10 +50,9 @@ export const StyledSearchBar = styled.div`
 export const StyledSearchBarWrapper = styled.div`
   display: flex;
   width: 100%;
-  box-sizing: border-box;
 `;
 
-export const SearchBar: FC = () => {
+export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue }) => {
   const [, setSearchText] = useState('');
   const [showLoader, setShowLoader] = useState(false);
 
@@ -66,9 +72,9 @@ export const SearchBar: FC = () => {
     <StyledSearchBarWrapper>
       <StyledSearchBar>
         <StyledLabel htmlFor="search-input">
-          <StyledSearchIcon src="search.svg" alt="search icon" />
+          <StyledSearchIcon />
         </StyledLabel>
-        <StyledInput id="search-input" maxLength={60} onChange={handleInput} placeholder="Search of employees" />
+        <StyledInput id="search-input" onChange={handleInput} placeholder={defaultInputValue} />
         {showLoader && <StyledLoader />}
       </StyledSearchBar>
     </StyledSearchBarWrapper>

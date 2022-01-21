@@ -1,12 +1,7 @@
 import styled from 'styled-components';
-import {
-  StyledTableHeaderWrapper,
-  StyledTitleImage,
-  StyledTitleItemWrapper,
-  TableHeader,
-  TableHeaderProps,
-} from './TableHeader';
-import { TableBody, TableBodyProps } from '../../dumb/TableBody';
+import { FC } from 'react';
+import { StyledTableHeader, TableHeader, TableHeaderProps } from './TableHeader';
+import { TableBody, TableBodyProps } from './TableBody';
 import {
   StyledBodyText,
   StyledBuildingIcon,
@@ -15,33 +10,76 @@ import {
   StyledLogo,
   StyledLogoWrapper,
   StyledNameWrapper,
-  StyledPositionWrapper,
   StyledTrashIcon,
   StyledWorkplaceWrapper,
-} from './hooks/useEmployeeColumns';
+} from './employeeTableBody';
 import { StyledTableItem, StyledTableRow } from './TableRow';
-import { Pagination, StyledArrowButton, StyledPaginationWrapper } from './Pagination';
+import { Pagination } from './Pagination';
 
-interface TableProps<T> extends TableBodyProps<T>, TableHeaderProps {}
+interface TableProps<T> extends TableBodyProps<T>, TableHeaderProps {
+  paginationProps: any;
+}
 
 export const StyledTable = styled.div`
   display: flex;
   flex-direction: column;
-  ${StyledPaginationWrapper} {
-    justify-content: flex-end;
-    margin: 22px 5px 30px 0;
-    ${StyledArrowButton} {
-      margin-left: 30px;
+  ${StyledChip} {
+    margin: 3px 0;
+    :not(:last-child) {
+      margin-right: 8px;
     }
   }
-  @media (max-width: 360px) {
+
+  @media (max-width: 1110px) {
+    ${StyledTableRow} {
+      padding: 0 5px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    margin-top: 24px;
+
+    ${StyledNameWrapper} {
+      margin-left: 12px;
+    }
+    ${StyledLogo} {
+      margin: 12px 0;
+    }
+
+    ${StyledTrashIcon} {
+      margin-left: 10px;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 768px) {
+    margin-top: 24px;
+    ${StyledLogoWrapper} {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+    }
+    ${StyledNameWrapper} {
+      align-items: flex-start;
+      margin-top: 40px;
+    }
+    ${StyledDepartmentWrapper} {
+      min-width: 90px;
+    }
+    ${StyledTableRow} {
+      :not(:first-child) {
+        min-height: 80px;
+      }
+    }
     ${StyledChip} {
-      margin-top: 10px;
+      padding: 8px 16px 8px 16px;
+    }
+    ${StyledTrashIcon} {
+      margin-left: 10px;
     }
   }
 
   @media (max-width: 480px) {
-    ${StyledTableHeaderWrapper} {
+    ${StyledTableHeader} {
       display: none;
     }
     ${StyledTableRow} {
@@ -50,7 +88,7 @@ export const StyledTable = styled.div`
       grid-template-columns: 44px 2fr 1fr;
       padding: 16px;
       margin: 20px 16px;
-      background: #ffffff;
+      background-color: #fff;
       border: 1px solid #d0e2f6;
       box-sizing: border-box;
       border-radius: 8px;
@@ -69,6 +107,10 @@ export const StyledTable = styled.div`
         :nth-child(3) {
           grid-row: 2;
           grid-column: 2;
+          ${StyledBodyText} {
+            font-size: 12px;
+            line-height: 14px;
+          }
         }
         //StyledDepartmentWrapper
         :nth-child(4) {
@@ -105,109 +147,14 @@ export const StyledTable = styled.div`
       margin: 0 16px 0 20px;
     }
   }
-
-  @media (min-width: 480px) and (max-width: 768px) {
-    margin-top: 24px;
-    ${StyledTitleItemWrapper} {
-      margin-bottom: 12px;
-    }
-
-    ${StyledTableHeaderWrapper} {
-      ${StyledTableItem} {
-        :nth-child(2) {
-          opacity: 0;
-          width: 0;
-        }
-      }
-    }
-    ${StyledLogoWrapper} {
-      position: absolute;
-      left: 5px;
-      top: 5px;
-    }
-    ${StyledNameWrapper} {
-      align-items: flex-start;
-      margin-top: 40px;
-      max-width: 80px;
-    }
-    ${StyledPositionWrapper} {
-      ${StyledBodyText} {
-        font-size: 14px;
-        line-height: 17px;
-      }
-    }
-    ${StyledDepartmentWrapper} {
-      min-width: 90px;
-    }
-    ${StyledTableRow} {
-      :not(:first-child) {
-        min-height: 80px;
-      }
-    }
-    ${StyledChip} {
-      margin: 3px 0;
-      padding: 8px 16px 8px 16px;
-      :not(:last-child) {
-        margin-right: 8px;
-      }
-    }
-    ${StyledTrashIcon} {
-      margin-left: 10px;
-    }
-  }
-  @media (min-width: 768px) {
-    margin-top: 24px;
-    ${StyledTitleItemWrapper} {
-      margin-bottom: 12px;
-    }
-    ${StyledTableHeaderWrapper} {
-      ${StyledTableItem} {
-        :nth-child(2) {
-          opacity: 0;
-          width: 0;
-        }
-      }
-    }
-    ${StyledNameWrapper} {
-      margin-left: 12px;
-      max-width: 120px;
-    }
-    ${StyledPositionWrapper} {
-      ${StyledBodyText} {
-        font-size: 14px;
-        line-height: 17px;
-      }
-    }
-    ${StyledLogo} {
-      margin: 12px 0 12px;
-    }
-    ${StyledChip} {
-      margin: 3px 0;
-      padding: 8px 12px;
-      :not(:last-child) {
-        margin-right: 8px;
-      }
-    }
-    ${StyledTrashIcon} {
-      margin-left: 10px;
-    }
-    ${StyledTitleImage} {
-      margin-left: 10px;
-    }
-  }
-  @media (min-width: 480px) and (max-width: 1110px) {
-    ${StyledTableRow} {
-      padding: 0 5px;
-    }
-  }
 `;
 
-export const Table = <T,>({ data, columns, columnTitles }: TableProps<T>) => {
+export const Table: FC<TableProps<any>> = ({ data, columns, columnTitles, paginationProps }) => {
   return (
     <StyledTable>
       <TableHeader columnTitles={columnTitles} />
       <TableBody data={data} columns={columns} />
-      <Pagination />
+      <Pagination paginationProps={paginationProps} />
     </StyledTable>
   );
 };

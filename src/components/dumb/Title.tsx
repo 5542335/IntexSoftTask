@@ -1,13 +1,12 @@
-import styled from 'styled-components';
 import { FC } from 'react';
+import styled from 'styled-components';
 
-export const StyledTitle = styled.div`
-  font-size: 36px;
-  line-height: 43px;
-  margin: 0;
-`;
+interface TitleProps {
+  children: string;
+}
 
-export const Title: FC = () => {
-  const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
-  return <StyledTitle>{titleText}</StyledTitle>;
+export const StyledTitle = styled.p``;
+
+export const Title: FC<TitleProps> = ({ children }) => {
+  return <StyledTitle>{children}</StyledTitle>;
 };

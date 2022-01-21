@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: bold;
     letter-spacing: 0.02em;
   }
-  body {
+  body, p {
     margin: 0;
   }
   html {

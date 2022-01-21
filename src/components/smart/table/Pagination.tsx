@@ -1,30 +1,43 @@
 import styled from 'styled-components';
+import { FC, useCallback } from 'react';
 
-export const StyledPaginationWrapper = styled.div`
+export interface PaginationProps {
+  paginationProps: any;
+}
+
+interface ArrowBtn {
+  bgImage: string;
+}
+
+const StyledPagination = styled.div`
   display: flex;
+  justify-content: flex-end;
+  margin: 22px 10px 30px 0;
 `;
 
-export const StyledArrowButton = styled.button`
+const StyledArrowButton = styled.button<ArrowBtn>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  background-color: transparent;
   cursor: pointer;
+  margin-left: 30px;
+  width: 14px;
+  height: 12px;
+  background-image: url(${(props) => props.bgImage});
+  background-color: transparent;
+  background-repeat: no-repeat;
 `;
-export const StyledArrow = styled.img``;
-export const Pagination = () => {
+export const Pagination: FC<PaginationProps> = () => {
+  const handleClick = useCallback((e) => {
+    console.log(e.target.id);
+  }, []);
   return (
-    <StyledPaginationWrapper>
-      <StyledArrowButton>
-        <StyledArrow src="leftEndArrow.svg" alt="to the first page" />
-      </StyledArrowButton>
-      <StyledArrowButton>
-        <StyledArrow src="leftArrow.svg" alt="to the previous page" />
-      </StyledArrowButton>
-      <StyledArrowButton>
-        <StyledArrow src="rightArrow.svg" alt="to the next page" />
-      </StyledArrowButton>
-      <StyledArrowButton>
-        <StyledArrow src="rightEndArrow.svg" alt="to the last page" />
-      </StyledArrowButton>
-    </StyledPaginationWrapper>
+    <StyledPagination onClick={handleClick}>
+      <StyledArrowButton bgImage="leftEndArrow.svg" />
+      <StyledArrowButton bgImage="leftArrow.svg" />
+      <StyledArrowButton bgImage="rightArrow.svg" />
+      <StyledArrowButton bgImage="rightEndArrow.svg" />
+    </StyledPagination>
   );
 };

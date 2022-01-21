@@ -14,6 +14,7 @@ export interface TableHeaderProps {
 export const StyledTitleItemWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 12px;
 `;
 
 const StyledHeaderTitleText = styled.p`
@@ -24,18 +25,23 @@ const StyledHeaderTitleText = styled.p`
   margin: 0;
 `;
 
-export const StyledTitleImage = styled.img`
+export const StyledHeaderTitleImage = styled.div`
+  width: 18px;
+  height: 18px;
+  margin-left: 10px;
+  background-image: url('sortArrows.svg');
+  background-repeat: no-repeat;
   cursor: pointer;
 `;
 
-export const StyledTableHeaderWrapper = styled.div``;
+export const StyledTableHeader = styled.div``;
 
 const getContent = (title: string) => () => {
   if (title) {
     return (
       <StyledTitleItemWrapper key={title}>
         <StyledHeaderTitleText>{title}</StyledHeaderTitleText>
-        <StyledTitleImage src="sortArrows.svg" alt="table sort icon" />
+        <StyledHeaderTitleImage />
       </StyledTitleItemWrapper>
     );
   }
@@ -43,15 +49,15 @@ const getContent = (title: string) => () => {
   return null;
 };
 
-export const TableHeader: FC<TableHeaderProps> = ({ columnTitles }: TableHeaderProps) => {
-  const headerItemsWithIcon = columnTitles.map(({ width, title }) => ({
+export const TableHeader: FC<TableHeaderProps> = ({ columnTitles }) => {
+  const headerItems = columnTitles.map(({ width, title }) => ({
     Content: getContent(title),
     width,
   }));
 
   return (
-    <StyledTableHeaderWrapper>
-      <TableRow columns={headerItemsWithIcon} />
-    </StyledTableHeaderWrapper>
+    <StyledTableHeader>
+      <TableRow columns={headerItems} />
+    </StyledTableHeader>
   );
 };

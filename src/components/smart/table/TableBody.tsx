@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { TableRow, TableRowProps } from '../smart/table/TableRow';
+import { TableRow, TableRowProps } from './TableRow';
 
 export interface TableBodyProps<T> {
-  data: TableRowProps<T>['item'][];
+  data: TableRowProps<T>['data'][];
   columns: TableRowProps<T>['columns'];
 }
 
@@ -11,8 +11,8 @@ export const StyledTableBodyWrapper = styled.div``;
 export const TableBody = <T,>({ data, columns }: TableBodyProps<T>) => {
   return (
     <StyledTableBodyWrapper>
-      {data.map((item) => {
-        return <TableRow key={item?.id} columns={columns} item={item} />;
+      {data.map((dataItem) => {
+        return <TableRow key={dataItem?.id} columns={columns} data={dataItem} />;
       })}
     </StyledTableBodyWrapper>
   );

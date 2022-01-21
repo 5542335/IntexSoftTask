@@ -15,18 +15,15 @@ interface ColumnProps {
 
 export interface TableRowProps<T> {
   columns: ColumnProps[];
-  item?: T & TableDataProps;
+  data?: T & TableDataProps;
 }
 
 export const StyledTableRow = styled.div`
+  display: flex;
   font-size: 14px;
   line-height: 17px;
-
-  color: #404851;
-  display: flex;
   position: relative;
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(64, 72, 81, 0.1);
+  border-bottom: 1px solid #40485119;
 `;
 
 export const StyledTableItem = styled.div<StyledTableHeaderTitleProps>`
@@ -34,12 +31,12 @@ export const StyledTableItem = styled.div<StyledTableHeaderTitleProps>`
   flex-basis: ${(props) => `${props.flexBasis}px`};
 `;
 
-export const TableRow = <T,>({ columns, item }: TableRowProps<T>) => (
+export const TableRow = <T,>({ columns, data }: TableRowProps<T>) => (
   <StyledTableRow>
     {columns.map(({ Content, width }) => {
       return (
-        <StyledTableItem key={item?.id} flexBasis={width}>
-          {Content && <Content {...item} />}
+        <StyledTableItem key={width} flexBasis={width}>
+          {Content && <Content {...data} />}
         </StyledTableItem>
       );
     })}

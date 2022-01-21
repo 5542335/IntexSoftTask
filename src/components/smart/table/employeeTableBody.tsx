@@ -1,28 +1,33 @@
 import styled from 'styled-components';
-import { useMemo } from 'react';
 
 interface StyledBodyTextProps {
-  fontSize?: string;
-  lineHeight?: string;
   textColor?: string;
   backgroundColor?: string;
 }
 
 export const StyledBodyText = styled.p<StyledBodyTextProps>`
-  font-size: ${(props) => (props.fontSize ? `${props.fontSize}` : '14px')};
-  line-height: ${(props) => (props.lineHeight ? `${props.lineHeight}` : '17px')};
+  font-size: 14px;
+  line-height: 17px;
   color: ${(props) => (props.textColor ? `${props.textColor}` : '#404851')};
   margin: 0;
 `;
 
 export const StyledLogo = styled.img``;
 
-export const StyledChipIcon = styled.img`
+export const StyledChipIcon = styled.div`
   cursor: pointer;
 `;
 
-export const StyledBuildingIcon = styled(StyledChipIcon)``;
-export const StyledTrashIcon = styled(StyledChipIcon)``;
+export const StyledBuildingIcon = styled(StyledChipIcon)`
+  width: 18px;
+  height: 18px;
+  background-image: url('building.svg');
+`;
+export const StyledTrashIcon = styled(StyledChipIcon)`
+  width: 14px;
+  height: 18px;
+  background-image: url('trash.svg');
+`;
 
 const StyledItemWrapper = styled.div`
   display: flex;
@@ -40,10 +45,11 @@ export const StyledChip = styled.div<StyledBodyTextProps>`
   display: flex;
   justify-content: center;
   background-color: ${(props) => (props.backgroundColor ? `${props.backgroundColor}` : '#f1f8ff')};
+  padding: 8px 12px;
   border-radius: 16px;
 `;
 
-export const useEmployeeColumns = () => {
+export const getEmployeeTableBody = () => {
   const userLogoItem = ({ logo }: { logo: string }) => (
     <StyledLogoWrapper>
       <StyledLogo src={logo} alt="logo icon" />
@@ -58,9 +64,7 @@ export const useEmployeeColumns = () => {
 
   const userPositionItem = ({ position }: { position: string }) => (
     <StyledPositionWrapper>
-      <StyledBodyText fontSize="12px" lineHeight="14px">
-        {position}
-      </StyledBodyText>
+      <StyledBodyText>{position}</StyledBodyText>
     </StyledPositionWrapper>
   );
 
@@ -76,9 +80,9 @@ export const useEmployeeColumns = () => {
         workplaces.map((workplace) => {
           return (
             <StyledChip key={workplace}>
-              {window.innerWidth < 480 && <StyledBuildingIcon src="building.svg" alt="delete chip icon" />}
+              {window.innerWidth < 480 && <StyledBuildingIcon />}
               <StyledBodyText textColor="#3386D9">{workplace}</StyledBodyText>
-              <StyledTrashIcon src="trash.svg" alt="delete chip icon" />
+              <StyledTrashIcon />
             </StyledChip>
           );
         })
@@ -90,14 +94,11 @@ export const useEmployeeColumns = () => {
     </StyledWorkplaceWrapper>
   );
 
-  return useMemo(
-    () => [
-      { Content: userLogoItem, width: 32 },
-      { Content: userNameItem, width: 204 },
-      { Content: userPositionItem, width: 162 },
-      { Content: userDepartmentItem, width: 136 },
-      { Content: userWorkplaceItem, width: 576 },
-    ],
-    [],
-  );
+  return [
+    { Content: userLogoItem, width: 32 },
+    { Content: userNameItem, width: 204 },
+    { Content: userPositionItem, width: 162 },
+    { Content: userDepartmentItem, width: 136 },
+    { Content: userWorkplaceItem, width: 576 },
+  ];
 };
