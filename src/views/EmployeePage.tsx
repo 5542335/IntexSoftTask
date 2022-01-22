@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { StyledTitle, Title } from '../components/dumb/Title';
 import { Tabs, StyledTabs } from '../components/dumb/Tabs';
@@ -9,7 +9,6 @@ import { workPlace, departments, users } from '../data';
 import { StyledTable, Table } from '../components/smart/table/Table';
 import {
   getEmployeeTableBody,
-  StyledBodyText,
   StyledBuildingIcon,
   StyledChip,
   StyledDepartmentWrapper,
@@ -18,9 +17,10 @@ import {
   StyledNameWrapper,
   StyledTrashIcon,
   StyledWorkplaceWrapper,
+  StyledText,
 } from '../components/smart/table/employeeTableBody';
 import { getEmployeeTableTitles } from '../components/smart/table/employeeTableTitles';
-import { StyledTableItem, StyledTableRow } from '../components/smart/table/TableRow';
+import { StyledTableItem, StyledTableRow, TableDataProps } from '../components/smart/table/TableRow';
 import { StyledTableHeader } from '../components/smart/table/TableHeader';
 
 const StyledPageWrapper = styled.div`
@@ -147,7 +147,7 @@ const StyledPageWrapper = styled.div`
       :nth-child(3) {
         grid-row: 2;
         grid-column: 2;
-        ${StyledBodyText} {
+        ${StyledText} {
           font-size: 12px;
           line-height: 14px;
         }
@@ -177,7 +177,7 @@ const StyledPageWrapper = styled.div`
       min-width: 0;
     }
     ${StyledWorkplaceWrapper} {
-      ${StyledBodyText} {
+      ${StyledText} {
         font-size: 12px;
       }
       display: flex;
@@ -261,20 +261,23 @@ export const EmployeePage: FC = () => {
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
   const employeeColumns = getEmployeeTableBody();
   const tableTitles = getEmployeeTableTitles();
-  const [employees, setEmployees] = useState(users);
-  const [offset, setOffset] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [tableData, setTableData] = useState<TableDataProps[]>([]);
+  const [offset, setOffset] = useState<number>(0);
+  const [rowsPerPage] = useState<number>(10);
+  const [totalRows, setTotalRows] = useState<number>();
+
+  useEffect(() => {
+    setTableData(users.slice(offset, rowsPerPage));
+    setOffset(rowsPerPage);
+    setTotalRows(users.length);
+  }, []);
 
   const paginationProps = {
-    employees,
-    setEmployees,
+    setTableData,
     offset,
     setOffset,
-    pageCount,
-    setPageCount,
     rowsPerPage,
-    setRowsPerPage,
+    totalRows,
   };
 
   return (
@@ -290,7 +293,7 @@ export const EmployeePage: FC = () => {
           selectButtonText={selectButtonText}
         />
       </StyledSearchAndSelect>
-      <Table data={users} columns={employeeColumns} columnTitles={tableTitles} paginationProps={paginationProps} />
+      <Table data={tableData} columns={employeeColumns} columnTitles={tableTitles} paginationProps={paginationProps} />
     </StyledPageWrapper>
   );
 };

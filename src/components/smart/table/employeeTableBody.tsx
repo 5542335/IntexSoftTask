@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-interface StyledBodyTextProps {
+interface StyledTextProps {
   textColor?: string;
   backgroundColor?: string;
 }
 
-export const StyledBodyText = styled.p<StyledBodyTextProps>`
+export const StyledText = styled.p<StyledTextProps>`
   font-size: 14px;
   line-height: 17px;
   color: ${(props) => (props.textColor ? `${props.textColor}` : '#404851')};
@@ -41,7 +41,7 @@ export const StyledPositionWrapper = styled(StyledItemWrapper)``;
 export const StyledDepartmentWrapper = styled(StyledItemWrapper)``;
 export const StyledWorkplaceWrapper = styled(StyledItemWrapper)``;
 
-export const StyledChip = styled.div<StyledBodyTextProps>`
+export const StyledChip = styled.div<StyledTextProps>`
   display: flex;
   justify-content: center;
   background-color: ${(props) => (props.backgroundColor ? `${props.backgroundColor}` : '#f1f8ff')};
@@ -58,19 +58,19 @@ export const getEmployeeTableBody = () => {
 
   const userNameItem = ({ name }: { name: string }) => (
     <StyledNameWrapper>
-      <StyledBodyText>{name}</StyledBodyText>
+      <StyledText>{name}</StyledText>
     </StyledNameWrapper>
   );
 
   const userPositionItem = ({ position }: { position: string }) => (
     <StyledPositionWrapper>
-      <StyledBodyText>{position}</StyledBodyText>
+      <StyledText>{position}</StyledText>
     </StyledPositionWrapper>
   );
 
   const userDepartmentItem = ({ department }: { department: string }) => (
     <StyledDepartmentWrapper>
-      <StyledBodyText textColor="#3386D9">{department}</StyledBodyText>
+      <StyledText textColor="#3386D9">{department}</StyledText>
     </StyledDepartmentWrapper>
   );
 
@@ -81,14 +81,14 @@ export const getEmployeeTableBody = () => {
           return (
             <StyledChip key={workplace}>
               {window.innerWidth < 480 && <StyledBuildingIcon />}
-              <StyledBodyText textColor="#3386D9">{workplace}</StyledBodyText>
+              <StyledText textColor="#3386D9">{workplace}</StyledText>
               <StyledTrashIcon />
             </StyledChip>
           );
         })
       ) : (
         <StyledChip backgroundColor="#FAFAFA">
-          <StyledBodyText textColor="#CE5347">No workplace</StyledBodyText>
+          <StyledText textColor="#CE5347">No workplace</StyledText>
         </StyledChip>
       )}
     </StyledWorkplaceWrapper>

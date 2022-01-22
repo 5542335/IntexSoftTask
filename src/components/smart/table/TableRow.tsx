@@ -4,8 +4,13 @@ interface StyledTableHeaderTitleProps {
   flexBasis?: number;
 }
 
-interface TableDataProps {
-  id: number;
+export interface TableDataProps {
+  id?: number;
+  logo: string;
+  name: string;
+  position: string;
+  department: string;
+  workplaces: string[];
 }
 
 interface ColumnProps {

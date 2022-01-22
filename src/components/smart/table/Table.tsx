@@ -5,7 +5,7 @@ import { TableHeader, TableHeaderProps } from './TableHeader';
 import { TableBody, TableBodyProps } from './TableBody';
 import { Pagination } from './Pagination';
 
-interface TableProps<T> extends TableBodyProps<T>, TableHeaderProps {
+export interface TableProps<T> extends TableBodyProps<T>, TableHeaderProps {
   paginationProps: any;
 }
 
