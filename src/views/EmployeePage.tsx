@@ -22,7 +22,7 @@ import {
 import { getEmployeeTableTitles } from '../components/smart/table/employeeTableTitles';
 import { StyledTableItem, StyledTableRow, TableDataProps } from '../components/smart/table/TableRow';
 import { StyledTableHeader } from '../components/smart/table/TableHeader';
-import { useFilters } from './useFilters';
+import { useFilters } from '../hooks/useFilters';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -263,10 +263,13 @@ export const EmployeePage: FC = () => {
 
   const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
+  const [searchText, setSearchText] = useState('');
   const employeeColumns = getEmployeeTableBody();
   const tableTitles = getEmployeeTableTitles();
   const [offset, setOffset] = useState<number>(0);
-  const { filteredData, updateFilter, getWorkplaceFilter, getDepartmentFilter } = useFilters<TableDataProps>(users);
+  const { filteredData, updateFilter, getWorkplaceFilter, getDepartmentFilter, getSearchTextFilter } =
+    useFilters<TableDataProps>(users);
+  console.log(searchText);
 
   const onChangeWorkplace = useCallback(
     (workplaceItem: string) => {
@@ -286,6 +289,15 @@ export const EmployeePage: FC = () => {
     [getDepartmentFilter, selectButtonText, updateFilter],
   );
 
+  const onChangeSearchText = useCallback(
+    (text: string) => {
+      setSearchText(text);
+      setOffset(0);
+      updateFilter('searchText', text ? getSearchTextFilter(text) : null);
+    },
+    [getSearchTextFilter, updateFilter],
+  );
+
   const paginationProps = {
     offset,
     setOffset,
@@ -302,7 +314,7 @@ export const EmployeePage: FC = () => {
       <Title>{titleText}</Title>
       <Tabs tabs={workplace} activeTab={currentWorkplace} onChange={onChangeWorkplace} />
       <StyledSearchAndSelect>
-        <SearchBar defaultInputValue="Search of employees" />
+        <SearchBar defaultInputValue="Search of employees" onChangeText={onChangeSearchText} />
         <Select
           currentSelect={currentSelectDep}
           items={departments}

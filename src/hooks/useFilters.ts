@@ -5,6 +5,8 @@ export const useFilters = <T>(data: T[]) => {
   const [filters, setFilters] = useState({});
   const [filteredData, setFilteredData] = useState<T[]>(data);
 
+  console.log(filteredData);
+
   const updateFilter = useCallback(
     (key: string, callback: ((user: TableDataProps) => boolean) | null) => {
       setFilters({ ...filters, [key]: callback });
@@ -24,6 +26,12 @@ export const useFilters = <T>(data: T[]) => {
       return currentDepartment === department;
     };
 
+  const getSearchTextFilter =
+    (text: string) =>
+    ({ name }: TableDataProps) => {
+      return name.toLocaleLowerCase().includes(text.toLocaleLowerCase());
+    };
+
   useEffect(() => {
     let filteredEmployees: T[] = [...data];
     Object.values(filters).forEach((filterCallback) => {
@@ -36,5 +44,5 @@ export const useFilters = <T>(data: T[]) => {
     setFilteredData(filteredEmployees);
   }, [data, filters, setFilteredData]);
 
-  return { updateFilter, filteredData, getWorkplaceFilter, getDepartmentFilter };
+  return { updateFilter, filteredData, getWorkplaceFilter, getDepartmentFilter, getSearchTextFilter };
 };
