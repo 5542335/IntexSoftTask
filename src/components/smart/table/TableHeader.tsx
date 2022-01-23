@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import styled from 'styled-components';
 import { TableRow } from './TableRow';
 
@@ -36,22 +36,21 @@ export const StyledHeaderTitleImage = styled.div`
 
 export const StyledTableHeader = styled.div``;
 
-const getContent = (title: string) => () => {
-  if (title) {
-    return (
-      <StyledTitleItemWrapper key={title}>
-        <StyledHeaderTitleText>{title}</StyledHeaderTitleText>
-        <StyledHeaderTitleImage />
-      </StyledTitleItemWrapper>
-    );
-  }
-
-  return null;
+const titleContent = (title: string) => () => {
+  const handleClick = useCallback(() => {
+    console.log(title);
+  }, []);
+  return (
+    <StyledTitleItemWrapper key={title}>
+      <StyledHeaderTitleText>{title}</StyledHeaderTitleText>
+      <StyledHeaderTitleImage onClick={handleClick} />
+    </StyledTitleItemWrapper>
+  );
 };
 
 export const TableHeader: FC<TableHeaderProps> = ({ columnTitles }) => {
   const headerItems = columnTitles.map(({ width, title }) => ({
-    Content: getContent(title),
+    Content: titleContent(title),
     width,
   }));
 

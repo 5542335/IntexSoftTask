@@ -53,8 +53,10 @@ export const StyledSearchBarWrapper = styled.div`
 `;
 
 export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue }) => {
-  const [, setSearchText] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
+  console.log(searchText);
 
   const handleInput = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setSearchText(value);

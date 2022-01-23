@@ -11,8 +11,9 @@ export const StyledTableBodyWrapper = styled.div``;
 export const TableBody = <T,>({ data, columns }: TableBodyProps<T>) => {
   return (
     <StyledTableBodyWrapper>
-      {data.map((dataItem) => {
-        return <TableRow key={dataItem?.id} columns={columns} data={dataItem} />;
+      {data.map((dataItem, index) => {
+        // eslint-disable-next-line
+        return <TableRow key={`${dataItem?.id} + ${index}`} columns={columns} data={dataItem} />;
       })}
     </StyledTableBodyWrapper>
   );

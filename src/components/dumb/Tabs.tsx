@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 
 interface ActiveTabProps {
@@ -45,7 +45,7 @@ export const StyledTab = styled.li<ActiveTabProps>`
 interface TabsProps {
   tabs: string[];
   activeTab: string;
-  onChange: Dispatch<SetStateAction<string>>;
+  onChange: (tab: string) => void;
 }
 
 export const Tabs: FC<TabsProps> = ({ tabs, activeTab, onChange }) => {

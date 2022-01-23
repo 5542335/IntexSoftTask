@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import { StyledTitle, Title } from '../components/dumb/Title';
 import { Tabs, StyledTabs } from '../components/dumb/Tabs';
 import { SearchBar, StyledSearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
 import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
-import { workPlace, departments, users } from '../data';
+import { workplace, departments, users } from '../data';
 import { StyledTable, Table } from '../components/smart/table/Table';
 import {
   getEmployeeTableBody,
@@ -22,6 +22,7 @@ import {
 import { getEmployeeTableTitles } from '../components/smart/table/employeeTableTitles';
 import { StyledTableItem, StyledTableRow, TableDataProps } from '../components/smart/table/TableRow';
 import { StyledTableHeader } from '../components/smart/table/TableHeader';
+import { useFilters } from './useFilters';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -253,47 +254,68 @@ const StyledSearchAndSelect = styled.div`
   }
 `;
 
+const rowsPerPage = 10;
+
 export const EmployeePage: FC = () => {
+  const defaultWorkplace = 'All';
   const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
   const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
 
-  const [currentWorkPlace, setCurrentWorkPlace] = useState(workPlace[0]);
+  const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
   const employeeColumns = getEmployeeTableBody();
   const tableTitles = getEmployeeTableTitles();
-  const [tableData, setTableData] = useState<TableDataProps[]>([]);
   const [offset, setOffset] = useState<number>(0);
-  const [rowsPerPage] = useState<number>(10);
-  const [totalRows, setTotalRows] = useState<number>();
+  const { filteredData, updateFilter, getWorkplaceFilter, getDepartmentFilter } = useFilters<TableDataProps>(users);
 
-  useEffect(() => {
-    setTableData(users.slice(offset, rowsPerPage));
-    setOffset(rowsPerPage);
-    setTotalRows(users.length);
-  }, []);
+  const onChangeWorkplace = useCallback(
+    (workplaceItem: string) => {
+      setCurrentWorkplace(workplaceItem);
+      setOffset(0);
+      updateFilter('workplace', workplaceItem !== defaultWorkplace ? getWorkplaceFilter(workplaceItem) : null);
+    },
+    [getWorkplaceFilter, updateFilter],
+  );
+
+  const onChangeDepartment = useCallback(
+    (department: string) => {
+      setCurrentSelectDep(department);
+      setOffset(0);
+      updateFilter('department', department !== selectButtonText ? getDepartmentFilter(department) : null);
+    },
+    [getDepartmentFilter, selectButtonText, updateFilter],
+  );
 
   const paginationProps = {
-    setTableData,
     offset,
     setOffset,
     rowsPerPage,
-    totalRows,
+    totalRows: filteredData.length,
   };
+
+  const paginatedData = useMemo(() => {
+    return filteredData.slice(offset, rowsPerPage + offset);
+  }, [filteredData, offset]);
 
   return (
     <StyledPageWrapper>
       <Title>{titleText}</Title>
-      <Tabs tabs={workPlace} activeTab={currentWorkPlace} onChange={setCurrentWorkPlace} />
+      <Tabs tabs={workplace} activeTab={currentWorkplace} onChange={onChangeWorkplace} />
       <StyledSearchAndSelect>
         <SearchBar defaultInputValue="Search of employees" />
         <Select
           currentSelect={currentSelectDep}
           items={departments}
-          onChange={setCurrentSelectDep}
+          onChange={onChangeDepartment}
           selectButtonText={selectButtonText}
         />
       </StyledSearchAndSelect>
-      <Table data={tableData} columns={employeeColumns} columnTitles={tableTitles} paginationProps={paginationProps} />
+      <Table
+        data={paginatedData}
+        columns={employeeColumns}
+        columnTitles={tableTitles}
+        paginationProps={paginationProps}
+      />
     </StyledPageWrapper>
   );
 };

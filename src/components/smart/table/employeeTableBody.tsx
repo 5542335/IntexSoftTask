@@ -76,7 +76,7 @@ export const getEmployeeTableBody = () => {
 
   const userWorkplaceItem = ({ workplaces }: { workplaces: string[] }) => (
     <StyledWorkplaceWrapper>
-      {workplaces.length ? (
+      {workplaces?.length ? (
         workplaces.map((workplace) => {
           return (
             <StyledChip key={workplace}>
