@@ -2,13 +2,10 @@ import { FC, useCallback } from 'react';
 import styled from 'styled-components';
 import { TableRow } from './TableRow';
 
-interface ColumnTitleProps {
-  title: string;
-  width: number;
-}
-
 export interface TableHeaderProps {
-  columnTitles: ColumnTitleProps[];
+  columnTitles: string[];
+  onSort: (arg: any) => void;
+  sortedField: {};
 }
 
 export const StyledTitleItemWrapper = styled.div`
@@ -36,9 +33,13 @@ export const StyledHeaderTitleImage = styled.div`
 
 export const StyledTableHeader = styled.div``;
 
-const titleContent = (title: string) => () => {
+const titleContent = (title: string, sortedField: any, onSort: (arg: {}) => void) => () => {
   const handleClick = useCallback(() => {
-    console.log(title);
+    if (sortedField.order) {
+      onSort({ field: title, order: `${sortedField.order === 'ASC' ? 'DESC' : 'ASC'}` });
+    } else {
+      onSort({ field: title, order: 'ASC' });
+    }
   }, []);
   return (
     <StyledTitleItemWrapper key={title}>
@@ -48,12 +49,8 @@ const titleContent = (title: string) => () => {
   );
 };
 
-export const TableHeader: FC<TableHeaderProps> = ({ columnTitles }) => {
-  const headerItems = columnTitles.map(({ width, title }) => ({
-    Content: titleContent(title),
-    width,
-  }));
-
+export const TableHeader: FC<TableHeaderProps> = ({ columnTitles, sortedField, onSort }) => {
+  const headerItems = columnTitles.map((title) => titleContent(title, sortedField, onSort));
   return (
     <StyledTableHeader>
       <TableRow columns={headerItems} />

@@ -14,10 +14,10 @@ export const StyledTable = styled.div`
   flex-direction: column;
 `;
 
-export const Table: FC<TableProps<any>> = ({ data, columns, columnTitles, paginationProps }) => {
+export const Table: FC<TableProps<any>> = ({ data, columns, columnTitles, paginationProps, onSort, sortedField }) => {
   return (
     <StyledTable>
-      <TableHeader columnTitles={columnTitles} />
+      <TableHeader columnTitles={columnTitles} onSort={onSort} sortedField={sortedField} />
       <TableBody data={data} columns={columns} />
       <Pagination paginationProps={paginationProps} />
     </StyledTable>

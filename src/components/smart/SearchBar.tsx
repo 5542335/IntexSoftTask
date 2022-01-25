@@ -62,7 +62,6 @@ export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue, onChangeText 
       if (value.length >= 3) {
         setShowLoader(true);
         setTimeout(() => {
-          console.log(value);
           setShowLoader(false);
         }, 1000);
       }

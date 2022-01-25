@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { TableRow, TableRowProps } from './TableRow';
 
 export interface TableBodyProps<T> {
-  data: TableRowProps<T>['data'][];
-  columns: TableRowProps<T>['columns'];
+  data: TableRowProps<T>['data'][] | undefined;
+  columns: any;
 }
 
 export const StyledTableBodyWrapper = styled.div``;
@@ -11,9 +11,8 @@ export const StyledTableBodyWrapper = styled.div``;
 export const TableBody = <T,>({ data, columns }: TableBodyProps<T>) => {
   return (
     <StyledTableBodyWrapper>
-      {data.map((dataItem, index) => {
-        // eslint-disable-next-line
-        return <TableRow key={`${dataItem?.id} + ${index}`} columns={columns} data={dataItem} />;
+      {data?.map((dataItem) => {
+        return <TableRow key={dataItem?.id} columns={columns} data={dataItem} />;
       })}
     </StyledTableBodyWrapper>
   );

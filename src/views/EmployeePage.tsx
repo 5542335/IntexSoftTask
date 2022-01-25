@@ -19,10 +19,12 @@ import {
   StyledWorkplaceWrapper,
   StyledText,
 } from '../components/smart/table/employeeTableBody';
-import { getEmployeeTableTitles } from '../components/smart/table/employeeTableTitles';
 import { StyledTableItem, StyledTableRow, TableDataProps } from '../components/smart/table/TableRow';
 import { StyledTableHeader } from '../components/smart/table/TableHeader';
 import { useFilters } from '../hooks/useFilters';
+import { useSort } from '../hooks/useSort';
+import { StyledTableBodyWrapper } from '../components/smart/table/TableBody';
+import { getDepartmentFilter, getSearchTextFilter, getWorkplaceFilter } from '../components/smart/table/getFilters';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -40,6 +42,41 @@ const StyledPageWrapper = styled.div`
   }
   ${StyledTable} {
     margin-top: 24px;
+  }
+  ${StyledTableHeader} {
+    ${StyledTableItem} {
+      :nth-child(1) {
+        flex-basis: 236px;
+      }
+      :nth-child(2) {
+        flex-basis: 162px;
+      }
+      :nth-child(3) {
+        flex-basis: 136px;
+      }
+      :nth-child(4) {
+        flex-basis: 576px;
+      }
+    }
+  }
+  ${StyledTableBodyWrapper} {
+    ${StyledTableItem} {
+      :nth-child(1) {
+        flex-basis: 32px;
+      }
+      :nth-child(2) {
+        flex-basis: 204px;
+      }
+      :nth-child(3) {
+        flex-basis: 162px;
+      }
+      :nth-child(4) {
+        flex-basis: 136px;
+      }
+      :nth-child(5) {
+        flex-basis: 576px;
+      }
+    }
   }
   ${StyledLogo} {
     margin: 12px 0;
@@ -260,16 +297,13 @@ export const EmployeePage: FC = () => {
   const defaultWorkplace = 'All';
   const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
   const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
-
   const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
-  const [searchText, setSearchText] = useState('');
   const employeeColumns = getEmployeeTableBody();
-  const tableTitles = getEmployeeTableTitles();
   const [offset, setOffset] = useState<number>(0);
-  const { filteredData, updateFilter, getWorkplaceFilter, getDepartmentFilter, getSearchTextFilter } =
-    useFilters<TableDataProps>(users);
-  console.log(searchText);
+  const { filteredData, updateFilter } = useFilters<TableDataProps>(users);
+  const { sortedData, sortedField, setSortedField } = useSort<TableDataProps>(filteredData);
+  const tableTitles = ['Name', 'Position', 'Department', 'Workplace'];
 
   const onChangeWorkplace = useCallback(
     (workplaceItem: string) => {
@@ -277,7 +311,7 @@ export const EmployeePage: FC = () => {
       setOffset(0);
       updateFilter('workplace', workplaceItem !== defaultWorkplace ? getWorkplaceFilter(workplaceItem) : null);
     },
-    [getWorkplaceFilter, updateFilter],
+    [updateFilter],
   );
 
   const onChangeDepartment = useCallback(
@@ -286,28 +320,20 @@ export const EmployeePage: FC = () => {
       setOffset(0);
       updateFilter('department', department !== selectButtonText ? getDepartmentFilter(department) : null);
     },
-    [getDepartmentFilter, selectButtonText, updateFilter],
+    [selectButtonText, updateFilter],
   );
 
   const onChangeSearchText = useCallback(
     (text: string) => {
-      setSearchText(text);
       setOffset(0);
       updateFilter('searchText', text ? getSearchTextFilter(text) : null);
     },
-    [getSearchTextFilter, updateFilter],
+    [updateFilter],
   );
 
-  const paginationProps = {
-    offset,
-    setOffset,
-    rowsPerPage,
-    totalRows: filteredData.length,
-  };
-
   const paginatedData = useMemo(() => {
-    return filteredData.slice(offset, rowsPerPage + offset);
-  }, [filteredData, offset]);
+    return sortedData?.slice(offset, rowsPerPage + offset);
+  }, [sortedData, offset]);
 
   return (
     <StyledPageWrapper>
@@ -326,7 +352,9 @@ export const EmployeePage: FC = () => {
         data={paginatedData}
         columns={employeeColumns}
         columnTitles={tableTitles}
-        paginationProps={paginationProps}
+        paginationProps={{ offset, setOffset, rowsPerPage, totalRows: filteredData.length }}
+        onSort={setSortedField}
+        sortedField={sortedField}
       />
     </StyledPageWrapper>
   );

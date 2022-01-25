@@ -8,7 +8,7 @@ export const users = [
     name: 'Aleksander Aleksandrov1',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ export const users = [
     name: 'Aleksander Aleksandrov2',
     position: 'UX/UI Disigner',
     department: 'GD-6',
-    workplaces: ['Mostovaya'],
+    workplace: ['Mostovaya'],
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ export const users = [
     name: 'Aleksander Aleksandrov3',
     position: 'UX/UI Disigner',
     department: 'GD-1',
-    workplaces: ['Mostovaya', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Gaspadarchaya'],
   },
   {
     id: 4,
@@ -32,7 +32,7 @@ export const users = [
     name: 'Ivan Aleksandrov4',
     position: 'UX/UI Disigner',
     department: 'GD-2',
-    workplaces: [],
+    workplace: [],
   },
   {
     id: 5,
@@ -40,7 +40,7 @@ export const users = [
     name: 'Aleksander Aleksandrov5',
     position: 'UX/UI Disigner',
     department: 'GD-3',
-    workplaces: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
   },
   {
     id: 6,
@@ -48,7 +48,7 @@ export const users = [
     name: 'Oleg Aleksandrov6',
     position: 'UX/UI Disigner',
     department: 'GD-4',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 7,
@@ -56,7 +56,7 @@ export const users = [
     name: 'Oleg Aleksandrov7',
     position: 'UX/UI Disigner',
     department: 'GD-5',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 8,
@@ -64,7 +64,7 @@ export const users = [
     name: 'Oleg Aleksandrov8',
     position: 'UX/UI Disigner',
     department: 'GD-6',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 9,
@@ -72,7 +72,7 @@ export const users = [
     name: 'Oleg Aleksandrov9',
     position: 'UX/UI Disigner',
     department: 'GD-7',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 10,
@@ -80,7 +80,7 @@ export const users = [
     name: 'Oleg Aleksandrov10',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 11,
@@ -88,7 +88,7 @@ export const users = [
     name: 'Oleg Aleksandrov11',
     position: 'UX/UI Disigner',
     department: 'GD-1',
-    workplaces: [],
+    workplace: [],
   },
   {
     id: 12,
@@ -96,7 +96,7 @@ export const users = [
     name: 'Oleg Aleksandrov12',
     position: 'UX/UI Disigner',
     department: 'GD-2',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 13,
@@ -104,7 +104,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-3',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 14,
@@ -112,7 +112,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-4',
-    workplaces: ['Mostovaya', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Gaspadarchaya'],
   },
   {
     id: 15,
@@ -120,7 +120,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-5',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 16,
@@ -128,7 +128,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-6',
-    workplaces: [],
+    workplace: [],
   },
   {
     id: 17,
@@ -136,7 +136,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-7',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 18,
@@ -144,7 +144,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 19,
@@ -152,7 +152,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
   },
   {
     id: 20,
@@ -160,7 +160,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 21,
@@ -168,7 +168,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
   },
   {
     id: 22,
@@ -176,7 +176,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 23,
@@ -184,7 +184,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
   },
   {
     id: 24,
@@ -192,7 +192,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 25,
@@ -200,7 +200,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'DNT', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'DNT', 'Gaspadarchaya'],
   },
   {
     id: 26,
@@ -208,7 +208,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 27,
@@ -216,7 +216,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 28,
@@ -224,7 +224,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['DNT', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['DNT', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 29,
@@ -232,7 +232,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 30,
@@ -240,7 +240,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 31,
@@ -248,7 +248,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'DNT', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'DNT', 'Gaspadarchaya'],
   },
   {
     id: 32,
@@ -256,7 +256,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 33,
@@ -264,7 +264,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 34,
@@ -272,7 +272,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'DNT'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'DNT'],
   },
   {
     id: 35,
@@ -280,7 +280,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 36,
@@ -288,7 +288,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 37,
@@ -296,7 +296,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Bogutskogo', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Bogutskogo', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 38,
@@ -304,7 +304,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 39,
@@ -312,7 +312,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 40,
@@ -320,7 +320,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 41,
@@ -328,7 +328,7 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 42,
@@ -336,6 +336,6 @@ export const users = [
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
-    workplaces: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
+    workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
 ];

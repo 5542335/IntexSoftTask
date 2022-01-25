@@ -50,38 +50,38 @@ export const StyledChip = styled.div<StyledTextProps>`
 `;
 
 export const getEmployeeTableBody = () => {
-  const userLogoItem = ({ logo }: { logo: string }) => (
+  const UserLogoItem = ({ logo }: { logo: string }) => (
     <StyledLogoWrapper>
       <StyledLogo src={logo} alt="logo icon" />
     </StyledLogoWrapper>
   );
 
-  const userNameItem = ({ name }: { name: string }) => (
+  const UserNameItem = ({ name }: { name: string }) => (
     <StyledNameWrapper>
       <StyledText>{name}</StyledText>
     </StyledNameWrapper>
   );
 
-  const userPositionItem = ({ position }: { position: string }) => (
+  const UserPositionItem = ({ position }: { position: string }) => (
     <StyledPositionWrapper>
       <StyledText>{position}</StyledText>
     </StyledPositionWrapper>
   );
 
-  const userDepartmentItem = ({ department }: { department: string }) => (
+  const UserDepartmentItem = ({ department }: { department: string }) => (
     <StyledDepartmentWrapper>
       <StyledText textColor="#3386D9">{department}</StyledText>
     </StyledDepartmentWrapper>
   );
 
-  const userWorkplaceItem = ({ workplaces }: { workplaces: string[] }) => (
+  const UserWorkplaceItem = ({ workplace }: { workplace: string[] }) => (
     <StyledWorkplaceWrapper>
-      {workplaces?.length ? (
-        workplaces.map((workplace) => {
+      {workplace?.length ? (
+        workplace.map((place) => {
           return (
-            <StyledChip key={workplace}>
+            <StyledChip key={place}>
               {window.innerWidth < 480 && <StyledBuildingIcon />}
-              <StyledText textColor="#3386D9">{workplace}</StyledText>
+              <StyledText textColor="#3386D9">{place}</StyledText>
               <StyledTrashIcon />
             </StyledChip>
           );
@@ -94,11 +94,5 @@ export const getEmployeeTableBody = () => {
     </StyledWorkplaceWrapper>
   );
 
-  return [
-    { Content: userLogoItem, width: 32 },
-    { Content: userNameItem, width: 204 },
-    { Content: userPositionItem, width: 162 },
-    { Content: userDepartmentItem, width: 136 },
-    { Content: userWorkplaceItem, width: 576 },
-  ];
+  return [UserLogoItem, UserNameItem, UserPositionItem, UserDepartmentItem, UserWorkplaceItem];
 };
