@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 
+export interface ISortedField {
+  field: string;
+  order: string;
+}
+
 export const useSort = <T>(data: T[]) => {
-  const [sortedField, setSortedField] = useState({
+  const [sortedField, setSortedField] = useState<ISortedField>({
     field: '',
     order: '',
   });
@@ -24,7 +29,7 @@ export const useSort = <T>(data: T[]) => {
     } else {
       setSortedData(data);
     }
-  }, [data, sortedField.field, sortedField.order]);
+  }, [data, sortedField]);
 
-  return { sortedData, sortedField, setSortedField };
+  return { sortedData, sortedField, setSortedField, setSortedData };
 };

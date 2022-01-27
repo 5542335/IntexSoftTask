@@ -25,6 +25,8 @@ import { useFilters } from '../hooks/useFilters';
 import { useSort } from '../hooks/useSort';
 import { StyledTableBodyWrapper } from '../components/smart/table/TableBody';
 import { getDepartmentFilter, getSearchTextFilter, getWorkplaceFilter } from '../components/smart/table/getFilters';
+import { Modal } from '../components/dumb/Modal';
+import { ModalContent, ModalData } from '../components/dumb/ModalContent';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -299,10 +301,12 @@ export const EmployeePage: FC = () => {
   const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
   const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
-  const employeeColumns = getEmployeeTableBody();
   const [offset, setOffset] = useState<number>(0);
-  const { filteredData, updateFilter } = useFilters<TableDataProps>(users);
-  const { sortedData, sortedField, setSortedField } = useSort<TableDataProps>(filteredData);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState<ModalData>();
+  const { filteredData, updateFilter } = useFilters(users);
+  const { sortedData, sortedField, setSortedField, setSortedData } = useSort<TableDataProps>(filteredData);
+  const employeeColumns = getEmployeeTableBody(setShowModal, setModalData);
   const tableTitles = ['Name', 'Position', 'Department', 'Workplace'];
 
   const onChangeWorkplace = useCallback(
@@ -331,9 +335,39 @@ export const EmployeePage: FC = () => {
     [updateFilter],
   );
 
+  const handleSort = useCallback(
+    (title: string) => () => {
+      if (sortedField.field) {
+        setSortedField({ field: title.toLowerCase(), order: `${sortedField.order === 'ASC' ? 'DESC' : 'ASC'}` });
+      } else {
+        setSortedField({ field: title.toLowerCase(), order: 'ASC' });
+      }
+    },
+    [setSortedField, sortedField.field, sortedField.order],
+  );
+
   const paginatedData = useMemo(() => {
     return sortedData?.slice(offset, rowsPerPage + offset);
   }, [sortedData, offset]);
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+    setModalData({ id: 0, logo: '', name: '', workplace: '' });
+  }, []);
+
+  const handleDeleteChip = useCallback(() => {
+    const newSortedData = sortedData?.map((user) => {
+      if (user.id === modalData?.id) {
+        const index = user.workplace.indexOf(modalData?.workplace as string);
+        user.workplace.splice(index, 1);
+        return user;
+      }
+      return user;
+    });
+    setSortedData(newSortedData);
+    setModalData({ id: 0, logo: '', name: '', workplace: '' });
+    setShowModal(false);
+  }, [modalData, setSortedData, sortedData]);
 
   return (
     <StyledPageWrapper>
@@ -353,9 +387,17 @@ export const EmployeePage: FC = () => {
         columns={employeeColumns}
         columnTitles={tableTitles}
         paginationProps={{ offset, setOffset, rowsPerPage, totalRows: filteredData.length }}
-        onSort={setSortedField}
+        onSort={handleSort}
         sortedField={sortedField}
       />
+      <Modal isActive={showModal} onClick={handleCloseModal}>
+        <ModalContent
+          modalText="Are you sure you want to remove booking of employee?"
+          modalData={modalData}
+          onClose={handleCloseModal}
+          onDelete={handleDeleteChip}
+        />
+      </Modal>
     </StyledPageWrapper>
   );
 };

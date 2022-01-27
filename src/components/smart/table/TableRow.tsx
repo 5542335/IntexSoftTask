@@ -29,7 +29,6 @@ export const StyledTableItem = styled.div`
 export const TableRow = <T,>({ columns, data }: TableRowProps<T>) => (
   <StyledTableRow>
     {columns.map((Component: any, index: number) => {
-      // eslint-disable-next-line react/no-array-index-key
       return <StyledTableItem key={index}>{Component(data)}</StyledTableItem>;
     })}
   </StyledTableRow>

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TableDataProps } from '../components/smart/table/TableRow';
 
-export const useFilters = <T>(data: T[]) => {
+export const useFilters = (data: TableDataProps[]) => {
   const [filters, setFilters] = useState({});
-  const [filteredData, setFilteredData] = useState<T[]>(data);
+  const [filteredData, setFilteredData] = useState(data);
 
   const updateFilter = useCallback(
     (key: string, callback: ((user: TableDataProps) => boolean) | null) => {
@@ -13,10 +13,9 @@ export const useFilters = <T>(data: T[]) => {
   );
 
   useEffect(() => {
-    let filteredEmployees: T[] = [...data];
-    Object.values(filters).forEach((filterCallback) => {
+    let filteredEmployees: TableDataProps[] = [...data];
+    Object.values(filters).forEach((filterCallback: any) => {
       if (filterCallback) {
-        // @ts-ignore
         filteredEmployees = filteredEmployees.filter(filterCallback);
       }
     });

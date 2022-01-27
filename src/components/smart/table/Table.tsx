@@ -1,12 +1,17 @@
 import styled from 'styled-components';
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 
 import { TableHeader, TableHeaderProps } from './TableHeader';
 import { TableBody, TableBodyProps } from './TableBody';
 import { Pagination } from './Pagination';
 
 export interface TableProps<T> extends TableBodyProps<T>, TableHeaderProps {
-  paginationProps: any;
+  paginationProps: {
+    offset: number;
+    setOffset: Dispatch<SetStateAction<number>>;
+    rowsPerPage: number;
+    totalRows: number;
+  };
 }
 
 export const StyledTable = styled.div`

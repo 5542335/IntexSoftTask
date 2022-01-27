@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FC, useCallback } from 'react';
+
 import { StyledText } from './employeeTableBody';
 
 export interface PaginationProps {
@@ -28,12 +29,12 @@ const StyledArrowButton = styled.button<ArrowBtn>`
   background-color: transparent;
   background-repeat: no-repeat;
   cursor: pointer;
-  ${({ disabled }) =>
-    disabled &&
-    `
-    opacity: 0.5;
-    cursor: default;
-  `}
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+      cursor: default;
+    `}
 `;
 export const Pagination: FC<PaginationProps> = ({ paginationProps }) => {
   const { offset, setOffset, rowsPerPage, totalRows } = paginationProps;
@@ -65,7 +66,7 @@ export const Pagination: FC<PaginationProps> = ({ paginationProps }) => {
   );
   return (
     <StyledPagination onClick={handleClick}>
-      <StyledText>{`${offset + 1} - ${
+      <StyledText>{`${totalRows ? offset + 1 : offset} - ${
         offset + rowsPerPage >= totalRows ? totalRows : offset + rowsPerPage
       } of ${totalRows}`}</StyledText>
       <StyledArrowButton disabled={offset === 0} id="first-page" bgImage="leftEndArrow.svg" />

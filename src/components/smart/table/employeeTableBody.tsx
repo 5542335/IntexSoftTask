@@ -1,4 +1,7 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+
+import { ModalData } from '../../dumb/ModalContent';
 
 interface StyledTextProps {
   textColor?: string;
@@ -12,7 +15,9 @@ export const StyledText = styled.p<StyledTextProps>`
   margin: 0;
 `;
 
-export const StyledLogo = styled.img``;
+export const StyledLogo = styled.img`
+  border-radius: 16px;
+`;
 
 export const StyledChipIcon = styled.div`
   cursor: pointer;
@@ -49,7 +54,10 @@ export const StyledChip = styled.div<StyledTextProps>`
   border-radius: 16px;
 `;
 
-export const getEmployeeTableBody = () => {
+export const getEmployeeTableBody = (
+  setShowModal: Dispatch<SetStateAction<boolean>>,
+  setModalData: Dispatch<SetStateAction<ModalData | undefined>>,
+) => {
   const UserLogoItem = ({ logo }: { logo: string }) => (
     <StyledLogoWrapper>
       <StyledLogo src={logo} alt="logo icon" />
@@ -74,25 +82,31 @@ export const getEmployeeTableBody = () => {
     </StyledDepartmentWrapper>
   );
 
-  const UserWorkplaceItem = ({ workplace }: { workplace: string[] }) => (
-    <StyledWorkplaceWrapper>
-      {workplace?.length ? (
-        workplace.map((place) => {
-          return (
-            <StyledChip key={place}>
-              {window.innerWidth < 480 && <StyledBuildingIcon />}
-              <StyledText textColor="#3386D9">{place}</StyledText>
-              <StyledTrashIcon />
-            </StyledChip>
-          );
-        })
-      ) : (
-        <StyledChip backgroundColor="#FAFAFA">
-          <StyledText textColor="#CE5347">No workplace</StyledText>
-        </StyledChip>
-      )}
-    </StyledWorkplaceWrapper>
-  );
+  const UserWorkplaceItem = ({ id, logo, name, workplace }: any) => {
+    const handleDeleteChip = (wplace: string) => () => {
+      setShowModal(true);
+      setModalData({ id, logo, name, workplace: wplace });
+    };
+    return (
+      <StyledWorkplaceWrapper>
+        {workplace?.length ? (
+          workplace.map((wplace: string) => {
+            return (
+              <StyledChip key={wplace}>
+                {window.innerWidth < 480 && <StyledBuildingIcon />}
+                <StyledText textColor="#3386D9">{wplace}</StyledText>
+                <StyledTrashIcon onClick={handleDeleteChip(wplace)} />
+              </StyledChip>
+            );
+          })
+        ) : (
+          <StyledChip backgroundColor="#FAFAFA">
+            <StyledText textColor="#CE5347">No workplace</StyledText>
+          </StyledChip>
+        )}
+      </StyledWorkplaceWrapper>
+    );
+  };
 
   return [UserLogoItem, UserNameItem, UserPositionItem, UserDepartmentItem, UserWorkplaceItem];
 };
