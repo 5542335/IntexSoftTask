@@ -1,5 +1,5 @@
-import { Dispatch, FC, SetStateAction } from 'react';
-import styled from 'styled-components';
+import { FC } from 'react';
+import styled, { css } from 'styled-components';
 
 interface ActiveTabProps {
   isActive?: boolean;
@@ -26,26 +26,26 @@ export const StyledTab = styled.li<ActiveTabProps>`
   cursor: pointer;
   user-select: none;
   position: relative;
-  ${({ isActive }) =>
-    isActive &&
-    `
-    color: #3386D9;
-    :after {
-      content: '';
-      width: 100%;
-      height: 4px;
-      background: #3386D9;
-      border-radius: 2px 2px 0 0;
-      position: absolute;
-      bottom: -1px;
-    }
-  `}
+  ${(props) =>
+    props.isActive &&
+    css`
+      color: #3386d9;
+      :after {
+        content: '';
+        width: 100%;
+        height: 4px;
+        background: #3386d9;
+        border-radius: 2px 2px 0 0;
+        position: absolute;
+        bottom: -1px;
+      }
+    `}
 `;
 
 interface TabsProps {
   tabs: string[];
   activeTab: string;
-  onChange: Dispatch<SetStateAction<string>>;
+  onChange: (tab: string) => void;
 }
 
 export const Tabs: FC<TabsProps> = ({ tabs, activeTab, onChange }) => {

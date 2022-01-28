@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FC, useCallback } from 'react';
+
 import { StyledText } from './employeeTableBody';
-import { users } from '../../../data';
 
 export interface PaginationProps {
   paginationProps: any;
@@ -28,53 +28,51 @@ const StyledArrowButton = styled.button<ArrowBtn>`
   background-image: url(${(props) => props.bgImage});
   background-color: transparent;
   background-repeat: no-repeat;
-  opacity: ${(props) => props.disabled && 0.5};
-  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+  cursor: pointer;
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+      cursor: default;
+    `}
 `;
 export const Pagination: FC<PaginationProps> = ({ paginationProps }) => {
-  const { setTableData, offset, setOffset, rowsPerPage, totalRows } = paginationProps;
+  const { offset, setOffset, rowsPerPage, totalRows } = paginationProps;
 
   const handleClick = useCallback(
     (event) => {
       switch (event.target.id) {
         case 'first-page':
-          setTableData(users.slice(0, rowsPerPage));
-          setOffset(rowsPerPage);
+          setOffset(0);
           break;
         case 'prev-page':
-          setTableData(users.slice(offset - 2 * rowsPerPage, offset - rowsPerPage));
           setOffset((prev: number) => prev - rowsPerPage);
           break;
         case 'next-page':
-          setTableData(users.slice(offset, offset + rowsPerPage));
           setOffset((prev: number) => prev + rowsPerPage);
           break;
         case 'last-page':
-          setOffset(Math.ceil(totalRows / rowsPerPage) * rowsPerPage);
-
-          if (Math.floor(totalRows / rowsPerPage) * rowsPerPage === users.length) {
-            setTableData(users.slice(Math.floor(totalRows / rowsPerPage) * rowsPerPage - rowsPerPage, users.length));
-            break;
+          if (Number.isInteger(totalRows / rowsPerPage)) {
+            setOffset(Math.floor(totalRows / rowsPerPage) * rowsPerPage - rowsPerPage);
+          } else {
+            setOffset(Math.floor(totalRows / rowsPerPage) * rowsPerPage);
           }
-          setTableData(users.slice(Math.floor(totalRows / rowsPerPage) * rowsPerPage, users.length));
           break;
         default:
           throw new Error('Что-то пошло не так');
       }
     },
-    [offset, rowsPerPage, setOffset, setTableData, totalRows],
+    [rowsPerPage, setOffset, totalRows],
   );
   return (
     <StyledPagination onClick={handleClick}>
-      <StyledText>
-        {`${offset - rowsPerPage + 1} - 
-               ${offset > users.length ? users.length : offset} of 
-               ${totalRows}`}
-      </StyledText>
-      <StyledArrowButton disabled={offset === rowsPerPage} id="first-page" bgImage="leftEndArrow.svg" />
-      <StyledArrowButton disabled={offset === rowsPerPage} id="prev-page" bgImage="leftArrow.svg" />
-      <StyledArrowButton disabled={offset >= users.length} id="next-page" bgImage="rightArrow.svg" />
-      <StyledArrowButton disabled={offset >= users.length} id="last-page" bgImage="rightEndArrow.svg" />
+      <StyledText>{`${totalRows ? offset + 1 : offset} - ${
+        offset + rowsPerPage >= totalRows ? totalRows : offset + rowsPerPage
+      } of ${totalRows}`}</StyledText>
+      <StyledArrowButton disabled={offset === 0} id="first-page" bgImage="leftEndArrow.svg" />
+      <StyledArrowButton disabled={offset === 0} id="prev-page" bgImage="leftArrow.svg" />
+      <StyledArrowButton disabled={offset + rowsPerPage >= totalRows} id="next-page" bgImage="rightArrow.svg" />
+      <StyledArrowButton disabled={offset + rowsPerPage >= totalRows} id="last-page" bgImage="rightEndArrow.svg" />
     </StyledPagination>
   );
 };

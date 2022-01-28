@@ -5,6 +5,7 @@ import { StyledLoader } from '../dumb/Loader';
 
 interface SearchBarProps {
   defaultInputValue: string;
+  onChangeText: (text: string) => void;
 }
 
 const StyledSearchIcon = styled.div`
@@ -38,7 +39,6 @@ export const StyledSearchBar = styled.div`
   border: 1px solid #d0e2f6;
   box-sizing: border-box;
   border-radius: 8px;
-
   ${StyledSearchIcon} {
     margin: 0 8px 0 16px;
   }
@@ -52,21 +52,22 @@ export const StyledSearchBarWrapper = styled.div`
   width: 100%;
 `;
 
-export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue }) => {
-  const [, setSearchText] = useState('');
+export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue, onChangeText }) => {
   const [showLoader, setShowLoader] = useState(false);
 
-  const handleInput = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(value);
+  const handleInput = useCallback(
+    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+      onChangeText(value);
 
-    if (value.length >= 3) {
-      setShowLoader(true);
-      setTimeout(() => {
-        console.log(value);
-        setShowLoader(false);
-      }, 1000);
-    }
-  }, []);
+      if (value.length >= 3) {
+        setShowLoader(true);
+        setTimeout(() => {
+          setShowLoader(false);
+        }, 1000);
+      }
+    },
+    [onChangeText],
+  );
 
   return (
     <StyledSearchBarWrapper>

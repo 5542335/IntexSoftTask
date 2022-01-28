@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'jsx-a11y', 'prettier'],
   rules: {
+    'react/no-array-index-key': 'off',
     'prettier/prettier': [
       2,
       {
@@ -96,6 +97,7 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         'no-undef': 0,
+        'react/no-array-index-key': 0,
       },
     },
   ],

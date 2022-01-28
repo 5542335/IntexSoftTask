@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 interface ArrowIconProps {
@@ -21,7 +21,7 @@ const StyledArrowIcon = styled.div<ArrowIconProps>`
   }
 `;
 
-export const StyledSelect = styled.button.attrs(() => ({ type: 'button' }))`
+export const StyledSelect = styled.button.attrs({ type: 'button' })`
   font-size: 14px;
   line-height: 17px;
   display: flex;
@@ -53,7 +53,7 @@ export const StyledOptionsWrapper = styled.ul`
   ::-webkit-scrollbar {
     width: 0;
   }
-  display: ${(props) => (props.hidden ? 'none' : '')};
+  display: ${(props) => props.hidden && 'none'};
 `;
 
 const StyledOption = styled.li`
@@ -64,7 +64,7 @@ const StyledOption = styled.li`
   :hover {
     color: #3386d9;
   }
-  display: ${(props) => (props.hidden ? 'none' : '')};
+  display: ${(props) => props.hidden && 'none'};
 `;
 
 export const StyledSelectWrapper = styled.div`
@@ -83,14 +83,27 @@ interface SelectProps {
 export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, selectButtonText }) => {
   const [isOpenOptions, setIsOpenOptions] = useState(false);
 
-  const handleClickOption = (selectedOption: string) => () => {
-    onChange(selectedOption || selectButtonText);
-    setIsOpenOptions(false);
-  };
+  const handleClickOption = useCallback(
+    (selectedOption: string) => () => {
+      onChange(selectedOption || selectButtonText);
+      setIsOpenOptions(false);
+    },
+    [onChange, selectButtonText],
+  );
 
   const handleOpenOptions = useCallback(() => {
     setIsOpenOptions(!isOpenOptions);
   }, [isOpenOptions]);
+
+  const options = useMemo(
+    () =>
+      items.map((department) => (
+        <StyledOption key={department} onClick={handleClickOption(department)} hidden={department === currentSelect}>
+          {department}
+        </StyledOption>
+      )),
+    [currentSelect, handleClickOption, items],
+  );
 
   return (
     <StyledSelectWrapper>
@@ -102,16 +115,7 @@ export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, select
         {currentSelect !== selectButtonText && isOpenOptions && (
           <StyledOption onClick={handleClickOption('')}>All</StyledOption>
         )}
-        {isOpenOptions &&
-          items.map((department) => (
-            <StyledOption
-              key={department}
-              onClick={handleClickOption(department)}
-              hidden={department === currentSelect}
-            >
-              {department}
-            </StyledOption>
-          ))}
+        {isOpenOptions && options}
       </StyledOptionsWrapper>
     </StyledSelectWrapper>
   );

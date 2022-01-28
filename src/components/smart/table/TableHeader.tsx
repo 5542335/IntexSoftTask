@@ -1,60 +1,20 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { TableRow } from './TableRow';
 
-interface ColumnTitleProps {
-  title: string;
-  width: number;
-}
+import { titleContent } from './titleContent';
+import { TableRow } from './TableRow';
+import { ISortedField } from '../../../hooks/useSort';
 
 export interface TableHeaderProps {
-  columnTitles: ColumnTitleProps[];
+  columnTitles: string[];
+  onSort: (title: string) => () => void;
+  sortedField: ISortedField;
 }
-
-export const StyledTitleItemWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-`;
-
-const StyledHeaderTitleText = styled.p`
-  font-size: 12px;
-  line-height: 14px;
-  color: #404851;
-  user-select: none;
-  margin: 0;
-`;
-
-export const StyledHeaderTitleImage = styled.div`
-  width: 18px;
-  height: 18px;
-  margin-left: 10px;
-  background-image: url('sortArrows.svg');
-  background-repeat: no-repeat;
-  cursor: pointer;
-`;
 
 export const StyledTableHeader = styled.div``;
 
-const getContent = (title: string) => () => {
-  if (title) {
-    return (
-      <StyledTitleItemWrapper key={title}>
-        <StyledHeaderTitleText>{title}</StyledHeaderTitleText>
-        <StyledHeaderTitleImage />
-      </StyledTitleItemWrapper>
-    );
-  }
-
-  return null;
-};
-
-export const TableHeader: FC<TableHeaderProps> = ({ columnTitles }) => {
-  const headerItems = columnTitles.map(({ width, title }) => ({
-    Content: getContent(title),
-    width,
-  }));
-
+export const TableHeader: FC<TableHeaderProps> = ({ columnTitles, onSort }) => {
+  const headerItems = columnTitles.map((title) => titleContent(title, onSort));
   return (
     <StyledTableHeader>
       <TableRow columns={headerItems} />

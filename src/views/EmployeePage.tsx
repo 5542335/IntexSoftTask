@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import { StyledTitle, Title } from '../components/dumb/Title';
 import { Tabs, StyledTabs } from '../components/dumb/Tabs';
 import { SearchBar, StyledSearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
 import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
-import { workPlace, departments, users } from '../data';
+import { workplace, departments, users } from '../data';
 import { StyledTable, Table } from '../components/smart/table/Table';
 import {
   getEmployeeTableBody,
@@ -19,9 +19,14 @@ import {
   StyledWorkplaceWrapper,
   StyledText,
 } from '../components/smart/table/employeeTableBody';
-import { getEmployeeTableTitles } from '../components/smart/table/employeeTableTitles';
 import { StyledTableItem, StyledTableRow, TableDataProps } from '../components/smart/table/TableRow';
 import { StyledTableHeader } from '../components/smart/table/TableHeader';
+import { useFilters } from '../hooks/useFilters';
+import { useSort } from '../hooks/useSort';
+import { StyledTableBodyWrapper } from '../components/smart/table/TableBody';
+import { getDepartmentFilter, getSearchTextFilter, getWorkplaceFilter } from '../components/smart/table/getFilters';
+import { Modal } from '../components/dumb/Modal';
+import { ModalContent, ModalData } from '../components/dumb/ModalContent';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -39,6 +44,41 @@ const StyledPageWrapper = styled.div`
   }
   ${StyledTable} {
     margin-top: 24px;
+  }
+  ${StyledTableHeader} {
+    ${StyledTableItem} {
+      :nth-child(1) {
+        flex-basis: 236px;
+      }
+      :nth-child(2) {
+        flex-basis: 162px;
+      }
+      :nth-child(3) {
+        flex-basis: 136px;
+      }
+      :nth-child(4) {
+        flex-basis: 576px;
+      }
+    }
+  }
+  ${StyledTableBodyWrapper} {
+    ${StyledTableItem} {
+      :nth-child(1) {
+        flex-basis: 32px;
+      }
+      :nth-child(2) {
+        flex-basis: 204px;
+      }
+      :nth-child(3) {
+        flex-basis: 162px;
+      }
+      :nth-child(4) {
+        flex-basis: 136px;
+      }
+      :nth-child(5) {
+        flex-basis: 576px;
+      }
+    }
   }
   ${StyledLogo} {
     margin: 12px 0;
@@ -253,47 +293,111 @@ const StyledSearchAndSelect = styled.div`
   }
 `;
 
+const rowsPerPage = 10;
+
 export const EmployeePage: FC = () => {
+  const defaultWorkplace = 'All';
   const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
   const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
-
-  const [currentWorkPlace, setCurrentWorkPlace] = useState(workPlace[0]);
+  const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
-  const employeeColumns = getEmployeeTableBody();
-  const tableTitles = getEmployeeTableTitles();
-  const [tableData, setTableData] = useState<TableDataProps[]>([]);
   const [offset, setOffset] = useState<number>(0);
-  const [rowsPerPage] = useState<number>(10);
-  const [totalRows, setTotalRows] = useState<number>();
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState<ModalData>();
+  const { filteredData, updateFilter } = useFilters(users);
+  const { sortedData, sortedField, setSortedField, setSortedData } = useSort<TableDataProps>(filteredData);
+  const employeeColumns = getEmployeeTableBody(setShowModal, setModalData);
+  const tableTitles = ['Name', 'Position', 'Department', 'Workplace'];
 
-  useEffect(() => {
-    setTableData(users.slice(offset, rowsPerPage));
-    setOffset(rowsPerPage);
-    setTotalRows(users.length);
+  const onChangeWorkplace = useCallback(
+    (workplaceItem: string) => {
+      setCurrentWorkplace(workplaceItem);
+      setOffset(0);
+      updateFilter('workplace', workplaceItem !== defaultWorkplace ? getWorkplaceFilter(workplaceItem) : null);
+    },
+    [updateFilter],
+  );
+
+  const onChangeDepartment = useCallback(
+    (department: string) => {
+      setCurrentSelectDep(department);
+      setOffset(0);
+      updateFilter('department', department !== selectButtonText ? getDepartmentFilter(department) : null);
+    },
+    [selectButtonText, updateFilter],
+  );
+
+  const onChangeSearchText = useCallback(
+    (text: string) => {
+      setOffset(0);
+      updateFilter('searchText', text ? getSearchTextFilter(text) : null);
+    },
+    [updateFilter],
+  );
+
+  const handleSort = useCallback(
+    (title: string) => () => {
+      if (sortedField.field) {
+        setSortedField({ field: title.toLowerCase(), order: `${sortedField.order === 'ASC' ? 'DESC' : 'ASC'}` });
+      } else {
+        setSortedField({ field: title.toLowerCase(), order: 'ASC' });
+      }
+    },
+    [setSortedField, sortedField.field, sortedField.order],
+  );
+
+  const paginatedData = useMemo(() => {
+    return sortedData?.slice(offset, rowsPerPage + offset);
+  }, [sortedData, offset]);
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+    setModalData({ id: 0, logo: '', name: '', workplace: '' });
   }, []);
 
-  const paginationProps = {
-    setTableData,
-    offset,
-    setOffset,
-    rowsPerPage,
-    totalRows,
-  };
+  const handleDeleteChip = useCallback(() => {
+    const newSortedData = sortedData?.map((user) => {
+      if (user.id === modalData?.id) {
+        const index = user.workplace.indexOf(modalData?.workplace as string);
+        user.workplace.splice(index, 1);
+        return user;
+      }
+      return user;
+    });
+    setSortedData(newSortedData);
+    setModalData({ id: 0, logo: '', name: '', workplace: '' });
+    setShowModal(false);
+  }, [modalData, setSortedData, sortedData]);
 
   return (
     <StyledPageWrapper>
       <Title>{titleText}</Title>
-      <Tabs tabs={workPlace} activeTab={currentWorkPlace} onChange={setCurrentWorkPlace} />
+      <Tabs tabs={workplace} activeTab={currentWorkplace} onChange={onChangeWorkplace} />
       <StyledSearchAndSelect>
-        <SearchBar defaultInputValue="Search of employees" />
+        <SearchBar defaultInputValue="Search of employees" onChangeText={onChangeSearchText} />
         <Select
           currentSelect={currentSelectDep}
           items={departments}
-          onChange={setCurrentSelectDep}
+          onChange={onChangeDepartment}
           selectButtonText={selectButtonText}
         />
       </StyledSearchAndSelect>
-      <Table data={tableData} columns={employeeColumns} columnTitles={tableTitles} paginationProps={paginationProps} />
+      <Table
+        data={paginatedData}
+        columns={employeeColumns}
+        columnTitles={tableTitles}
+        paginationProps={{ offset, setOffset, rowsPerPage, totalRows: filteredData.length }}
+        onSort={handleSort}
+        sortedField={sortedField}
+      />
+      <Modal isActive={showModal} onClick={handleCloseModal}>
+        <ModalContent
+          modalText="Are you sure you want to remove booking of employee?"
+          modalData={modalData}
+          onClose={handleCloseModal}
+          onDelete={handleDeleteChip}
+        />
+      </Modal>
     </StyledPageWrapper>
   );
 };

@@ -1,4 +1,7 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+
+import { ModalData } from '../../dumb/ModalContent';
 
 interface StyledTextProps {
   textColor?: string;
@@ -12,7 +15,9 @@ export const StyledText = styled.p<StyledTextProps>`
   margin: 0;
 `;
 
-export const StyledLogo = styled.img``;
+export const StyledLogo = styled.img`
+  border-radius: 16px;
+`;
 
 export const StyledChipIcon = styled.div`
   cursor: pointer;
@@ -49,56 +54,59 @@ export const StyledChip = styled.div<StyledTextProps>`
   border-radius: 16px;
 `;
 
-export const getEmployeeTableBody = () => {
-  const userLogoItem = ({ logo }: { logo: string }) => (
+export const getEmployeeTableBody = (
+  setShowModal: Dispatch<SetStateAction<boolean>>,
+  setModalData: Dispatch<SetStateAction<ModalData | undefined>>,
+) => {
+  const UserLogoItem = ({ logo }: { logo: string }) => (
     <StyledLogoWrapper>
       <StyledLogo src={logo} alt="logo icon" />
     </StyledLogoWrapper>
   );
 
-  const userNameItem = ({ name }: { name: string }) => (
+  const UserNameItem = ({ name }: { name: string }) => (
     <StyledNameWrapper>
       <StyledText>{name}</StyledText>
     </StyledNameWrapper>
   );
 
-  const userPositionItem = ({ position }: { position: string }) => (
+  const UserPositionItem = ({ position }: { position: string }) => (
     <StyledPositionWrapper>
       <StyledText>{position}</StyledText>
     </StyledPositionWrapper>
   );
 
-  const userDepartmentItem = ({ department }: { department: string }) => (
+  const UserDepartmentItem = ({ department }: { department: string }) => (
     <StyledDepartmentWrapper>
       <StyledText textColor="#3386D9">{department}</StyledText>
     </StyledDepartmentWrapper>
   );
 
-  const userWorkplaceItem = ({ workplaces }: { workplaces: string[] }) => (
-    <StyledWorkplaceWrapper>
-      {workplaces.length ? (
-        workplaces.map((workplace) => {
-          return (
-            <StyledChip key={workplace}>
-              {window.innerWidth < 480 && <StyledBuildingIcon />}
-              <StyledText textColor="#3386D9">{workplace}</StyledText>
-              <StyledTrashIcon />
-            </StyledChip>
-          );
-        })
-      ) : (
-        <StyledChip backgroundColor="#FAFAFA">
-          <StyledText textColor="#CE5347">No workplace</StyledText>
-        </StyledChip>
-      )}
-    </StyledWorkplaceWrapper>
-  );
+  const UserWorkplaceItem = ({ id, logo, name, workplace }: any) => {
+    const handleDeleteChip = (wplace: string) => () => {
+      setShowModal(true);
+      setModalData({ id, logo, name, workplace: wplace });
+    };
+    return (
+      <StyledWorkplaceWrapper>
+        {workplace?.length ? (
+          workplace.map((wplace: string) => {
+            return (
+              <StyledChip key={wplace}>
+                {window.innerWidth < 480 && <StyledBuildingIcon />}
+                <StyledText textColor="#3386D9">{wplace}</StyledText>
+                <StyledTrashIcon onClick={handleDeleteChip(wplace)} />
+              </StyledChip>
+            );
+          })
+        ) : (
+          <StyledChip backgroundColor="#FAFAFA">
+            <StyledText textColor="#CE5347">No workplace</StyledText>
+          </StyledChip>
+        )}
+      </StyledWorkplaceWrapper>
+    );
+  };
 
-  return [
-    { Content: userLogoItem, width: 32 },
-    { Content: userNameItem, width: 204 },
-    { Content: userPositionItem, width: 162 },
-    { Content: userDepartmentItem, width: 136 },
-    { Content: userWorkplaceItem, width: 576 },
-  ];
+  return [UserLogoItem, UserNameItem, UserPositionItem, UserDepartmentItem, UserWorkplaceItem];
 };

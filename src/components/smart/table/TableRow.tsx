@@ -1,25 +1,16 @@
 import styled from 'styled-components';
 
-interface StyledTableHeaderTitleProps {
-  flexBasis?: number;
-}
-
 export interface TableDataProps {
   id?: number;
   logo: string;
   name: string;
   position: string;
   department: string;
-  workplaces: string[];
-}
-
-interface ColumnProps {
-  Content: (arg: any) => JSX.Element | null;
-  width: number;
+  workplace: string[];
 }
 
 export interface TableRowProps<T> {
-  columns: ColumnProps[];
+  columns: any;
   data?: T & TableDataProps;
 }
 
@@ -31,19 +22,14 @@ export const StyledTableRow = styled.div`
   border-bottom: 1px solid #40485119;
 `;
 
-export const StyledTableItem = styled.div<StyledTableHeaderTitleProps>`
+export const StyledTableItem = styled.div`
   display: flex;
-  flex-basis: ${(props) => `${props.flexBasis}px`};
 `;
 
 export const TableRow = <T,>({ columns, data }: TableRowProps<T>) => (
   <StyledTableRow>
-    {columns.map(({ Content, width }) => {
-      return (
-        <StyledTableItem key={width} flexBasis={width}>
-          {Content && <Content {...data} />}
-        </StyledTableItem>
-      );
+    {columns.map((Component: any, index: number) => {
+      return <StyledTableItem key={index}>{Component(data)}</StyledTableItem>;
     })}
   </StyledTableRow>
 );
