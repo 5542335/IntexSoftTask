@@ -1,26 +1,12 @@
-import styled from "styled-components";
-import { FC, ReactChild, ReactElement } from "react";
-
-export const StyledTitle = styled.div`
-    font-family: Lato, Arial, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 43px;
-    letter-spacing: 0.02em;
-    font-feature-settings: 'ss09' on, 'liga' off;
-    color: ${props => props.color};
-`;
+import { FC } from 'react';
+import styled from 'styled-components';
 
 interface TitleProps {
-    children: ReactChild;
+  children: string;
 }
 
+export const StyledTitle = styled.p``;
 
-export const Title: FC<TitleProps> = ({children}: TitleProps): ReactElement => {
-    return (
-        <StyledTitle>
-            {children}
-        </StyledTitle>
-    )
-}
+export const Title: FC<TitleProps> = ({ children }) => {
+  return <StyledTitle>{children}</StyledTitle>;
+};

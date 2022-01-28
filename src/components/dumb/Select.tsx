@@ -1,93 +1,122 @@
-import { FC, useState } from "react";
-import styled from "styled-components";
+import { FC, useCallback, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
-export const StyledText = styled.p`
-    font-family: Lato, Arial, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 17px;
-    letter-spacing: 0.02em;
-`;
-
-interface StyledSelectProps {
-    hide?: boolean;
+interface ArrowIconProps {
+  rotateImg: boolean;
 }
 
-export const StyledSelect = styled.div<StyledSelectProps>`
-    display: flex;
-    max-width: 270px;
-    min-height: 48px;
-    justify-content: center;
-    align-items: center;
-    
-    background-color: #FFFFFF;
-    color: #3386D9;
-    border: 1px solid #D0E2F6;
-    box-sizing: border-box;
-    border-radius: 8px;
-    cursor: pointer;
-    :hover {
-        border-color: #3386D9;
+const StyledArrowIcon = styled.div<ArrowIconProps>`
+  width: 12px;
+  height: 8px;
+  background-image: url('./arrowDown.svg');
+  margin-left: 10px;
+  animation: ${(props) => props.rotateImg && 'rotate 0.5s forwards'};
+  @keyframes rotate {
+    0% {
+      transform: rotate(0);
     }
-    display: ${props => props.hide ? 'none' : ''};
-
-    ${StyledText} {
-        margin-right: 14px;
+    100% {
+      transform: rotate(180deg);
     }
+  }
 `;
 
-export const StyledOptionsWrapper = styled.div`
-    display: flex;
-    position: absolute;
-    flex-direction: column;
-    width: 100%;
-    max-height: 144px;
-    overflow-x: hidden;
+export const StyledSelect = styled.button.attrs({ type: 'button' })`
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: #3386d9;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
 `;
 
-const StyledSelectWrapper = styled.div`
-    max-width: 270px;
-    width: 100%;
+export const StyledOptionsWrapper = styled.ul`
+  position: absolute;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  align-self: flex-end;
+  min-width: 160px;
+  max-height: 150px;
+  overflow-x: hidden;
+  background: #fff;
+  border: 1px solid #00000019;
+  box-sizing: border-box;
+  box-shadow: 2px 4px 12px #0000001e;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+  display: ${(props) => props.hidden && 'none'};
+`;
+
+const StyledOption = styled.li`
+  font-size: 14px;
+  line-height: 17px;
+  padding: 16px 0 16px 24px;
+  list-style-type: none;
+  :hover {
+    color: #3386d9;
+  }
+  display: ${(props) => props.hidden && 'none'};
+`;
+
+export const StyledSelectWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
 `;
 
 interface SelectProps {
-    currentSelect: string;
-    items: string[];
-    onChange: (value: string) => void;
-  }
-
-export const Select: FC<SelectProps> = ({currentSelect, items, onChange}: SelectProps) => {
-    const [isOpenOptions, setIsOpenOptions] = useState(false);
-
-const handleClickOption = (selectedOption: string) => () => {
-    onChange(selectedOption || 'Choose department');
-    setIsOpenOptions(false);
-};
-
-    return (
-        <StyledSelectWrapper>
-            <StyledSelect onClick={() => setIsOpenOptions(!isOpenOptions)}>
-                <StyledText>{currentSelect}</StyledText> 
-                <img src="arrowButton.png" alt='choose department button'/>
-            </StyledSelect>
-            <StyledOptionsWrapper>
-                {currentSelect !== 'Choose department'
-                    && isOpenOptions
-                    && <StyledSelect onClick={handleClickOption('')}>All</StyledSelect>
-                }
-                {isOpenOptions && items.map((department) => {
-                    return (
-                        <StyledSelect
-                            key={department}
-                            onClick={handleClickOption(department)}
-                            hide={department === currentSelect}
-                        >
-                            {department}
-                        </StyledSelect>
-                    )
-                })}
-            </StyledOptionsWrapper>
-        </StyledSelectWrapper>
-    )
+  currentSelect: string;
+  items: string[];
+  onChange: (value: string) => void;
+  selectButtonText: string;
 }
+
+export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, selectButtonText }) => {
+  const [isOpenOptions, setIsOpenOptions] = useState(false);
+
+  const handleClickOption = useCallback(
+    (selectedOption: string) => () => {
+      onChange(selectedOption || selectButtonText);
+      setIsOpenOptions(false);
+    },
+    [onChange, selectButtonText],
+  );
+
+  const handleOpenOptions = useCallback(() => {
+    setIsOpenOptions(!isOpenOptions);
+  }, [isOpenOptions]);
+
+  const options = useMemo(
+    () =>
+      items.map((department) => (
+        <StyledOption key={department} onClick={handleClickOption(department)} hidden={department === currentSelect}>
+          {department}
+        </StyledOption>
+      )),
+    [currentSelect, handleClickOption, items],
+  );
+
+  return (
+    <StyledSelectWrapper>
+      <StyledSelect onClick={handleOpenOptions}>
+        {currentSelect}
+        <StyledArrowIcon rotateImg={isOpenOptions} />
+      </StyledSelect>
+      <StyledOptionsWrapper hidden={!isOpenOptions}>
+        {currentSelect !== selectButtonText && isOpenOptions && (
+          <StyledOption onClick={handleClickOption('')}>All</StyledOption>
+        )}
+        {isOpenOptions && options}
+      </StyledOptionsWrapper>
+    </StyledSelectWrapper>
+  );
+};

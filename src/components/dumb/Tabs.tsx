@@ -1,58 +1,67 @@
-import { Dispatch, FC, SetStateAction } from "react";
-import styled from "styled-components";
+import { FC } from 'react';
+import styled, { css } from 'styled-components';
 
-export const StyledTabsContainer = styled.ul`
-    display: flex;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid #DEECF9;
+interface ActiveTabProps {
+  isActive?: boolean;
+}
+
+export const StyledTabs = styled.ul`
+  display: flex;
+  overflow-x: scroll;
+  padding: 0;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-interface StyledTabProps {
-    marginTop?: string;
-    borderBottom?: string;
-    color?: string;
-    isActive?: boolean;
-  }
-
-export const StyledTab = styled.li<StyledTabProps>`
-    font-family: Lato, Arial, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 130%;
-    letter-spacing: 0.02em;
-
-    position: relative;
-    list-style: none;
-    padding: 0 16px 8px;
-    border-radius: 2px 2px 0px 0px;
-    margin-bottom: -1px;
-    cursor: pointer;
-    border-bottom: ${props => props.isActive ? '4px solid #3386D9' : ''};
-    color: ${props => props.isActive ? '#3386D9' : '#404851'};
+export const StyledTab = styled.li<ActiveTabProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 130%;
+  padding: 0 16px 12px;
+  color: #404851;
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  ${(props) =>
+    props.isActive &&
+    css`
+      color: #3386d9;
+      :after {
+        content: '';
+        width: 100%;
+        height: 4px;
+        background: #3386d9;
+        border-radius: 2px 2px 0 0;
+        position: absolute;
+        bottom: -1px;
+      }
+    `}
 `;
 
 interface TabsProps {
-    tabs: string[];
-    activeTab: string;
-    onChange: Dispatch<SetStateAction<string>>;
-  }
-
-export const Tabs: FC<TabsProps> = ({tabs, activeTab, onChange}: TabsProps) => {
-    return (
-        <StyledTabsContainer>
-            {tabs.map((tab) => {
-                return  (
-                    <StyledTab
-                        key={tab}
-                        onClick={() => onChange(tab)}
-                        isActive={activeTab === tab}
-                    >
-                        {tab}
-                    </StyledTab>
-                )
-            })}
-        </StyledTabsContainer>
-    )
+  tabs: string[];
+  activeTab: string;
+  onChange: (tab: string) => void;
 }
+
+export const Tabs: FC<TabsProps> = ({ tabs, activeTab, onChange }) => {
+  const handleClickTab = (tab: string) => () => {
+    onChange(tab);
+  };
+
+  return (
+    <StyledTabs>
+      {tabs.map((tab) => {
+        return (
+          <StyledTab key={tab} onClick={handleClickTab(tab)} isActive={activeTab === tab}>
+            {tab}
+          </StyledTab>
+        );
+      })}
+    </StyledTabs>
+  );
+};
