@@ -1,7 +1,8 @@
-import React, { ChangeEvent, FC, useCallback, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { StyledLoader } from '../dumb/Loader';
+import { useDebounce } from '../../hooks/useDebounce';
 
 interface SearchBarProps {
   defaultInputValue: string;
@@ -54,20 +55,23 @@ export const StyledSearchBarWrapper = styled.div`
 
 export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue, onChangeText }) => {
   const [showLoader, setShowLoader] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const debouncedText = useDebounce(searchText, 1000);
 
-  const handleInput = useCallback(
-    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-      onChangeText(value);
+  const handleInput = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(value);
+  }, []);
 
-      if (value.length >= 3) {
-        setShowLoader(true);
-        setTimeout(() => {
-          setShowLoader(false);
-        }, 1000);
-      }
-    },
-    [onChangeText],
-  );
+  useEffect(() => {
+    if (debouncedText.length >= 3) {
+      setShowLoader(true);
+      setTimeout(() => {
+        console.log(debouncedText);
+        setShowLoader(false);
+      }, 1000);
+    }
+    onChangeText(debouncedText);
+  }, [debouncedText]);
 
   return (
     <StyledSearchBarWrapper>

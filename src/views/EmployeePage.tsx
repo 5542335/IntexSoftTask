@@ -134,6 +134,16 @@ const StyledPageWrapper = styled.div`
       left: 5px;
       top: 5px;
     }
+    ${StyledTableBodyWrapper} {
+      ${StyledTableItem} {
+        :nth-child(1) {
+          flex-basis: 0;
+        }
+        :nth-child(2) {
+          flex-basis: 236px;
+        }
+      }
+    }
   }
 
   @media (max-width: 480px) {
@@ -183,6 +193,15 @@ const StyledPageWrapper = styled.div`
       :nth-child(2) {
         grid-row: 1;
         grid-column: 2;
+        ${StyledText} {
+          width: 160px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          :hover {
+            text-overflow: clip;
+          }
+        }
       }
       :nth-child(3) {
         grid-row: 2;

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
 import { FC, useCallback } from 'react';
+import styled, { css } from 'styled-components';
 
 import { StyledText } from './employeeTableBody';
 

@@ -5,7 +5,7 @@ export interface ISortedField {
   order: string;
 }
 
-export const useSort = <T>(data: T[]) => {
+export const useSort = <T>(data: T[] | any) => {
   const [sortedField, setSortedField] = useState<ISortedField>({
     field: '',
     order: '',
@@ -18,10 +18,8 @@ export const useSort = <T>(data: T[]) => {
 
       const sortedResult = [...data].sort((a, b) => {
         if (sortedField.order === 'ASC') {
-          // @ts-ignore
           return a[field] > b[field] ? 1 : -1;
         }
-        // @ts-ignore
         return a[field] < b[field] ? 1 : -1;
       });
 

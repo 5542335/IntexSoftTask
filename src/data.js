@@ -4,31 +4,31 @@ export const departments = ['HR-HRM', 'GD-1', 'GD-2', 'GD-3', 'GD-4', 'GD-5', 'G
 export const users = [
   {
     id: 1,
-    logo: 'logo.svg',
-    name: 'Aleksander Aleksandrov1',
+    logo: 'logo.png',
+    name: 'Oleg Aleksandrov1',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
     workplace: ['Mostovaya', 'Bogdanovicha', 'Gaspadarchaya'],
   },
   {
     id: 2,
-    logo: 'logo.svg',
-    name: 'Aleksander Aleksandrov2',
+    logo: 'logo.png',
+    name: 'Oleg Aleksandrov2',
     position: 'UX/UI Disigner',
     department: 'GD-6',
     workplace: ['Mostovaya'],
   },
   {
     id: 3,
-    logo: 'logo.svg',
-    name: 'Aleksander Aleksandrov3',
+    logo: 'logo.png',
+    name: 'Oleg Aleksandrov3',
     position: 'UX/UI Disigner',
     department: 'GD-1',
     workplace: ['Mostovaya', 'Gaspadarchaya'],
   },
   {
     id: 4,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Ivan Aleksandrov4',
     position: 'UX/UI Disigner',
     department: 'GD-2',
@@ -36,15 +36,15 @@ export const users = [
   },
   {
     id: 5,
-    logo: 'logo.svg',
-    name: 'Aleksander Aleksandrov5',
+    logo: 'logo.png',
+    name: 'Oleg Aleksandrov5',
     position: 'UX/UI Disigner',
     department: 'GD-3',
     workplace: ['Mostovaya', 'Bogutskogo', 'Gaspadarchaya'],
   },
   {
     id: 6,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov6',
     position: 'UX/UI Disigner',
     department: 'GD-4',
@@ -52,7 +52,7 @@ export const users = [
   },
   {
     id: 7,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov7',
     position: 'UX/UI Disigner',
     department: 'GD-5',
@@ -60,7 +60,7 @@ export const users = [
   },
   {
     id: 8,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov8',
     position: 'UX/UI Disigner',
     department: 'GD-6',
@@ -68,7 +68,7 @@ export const users = [
   },
   {
     id: 9,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov9',
     position: 'UX/UI Disigner',
     department: 'GD-7',
@@ -76,7 +76,7 @@ export const users = [
   },
   {
     id: 10,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov10',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -84,7 +84,7 @@ export const users = [
   },
   {
     id: 11,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov11',
     position: 'UX/UI Disigner',
     department: 'GD-1',
@@ -92,7 +92,7 @@ export const users = [
   },
   {
     id: 12,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov12',
     position: 'UX/UI Disigner',
     department: 'GD-2',
@@ -100,7 +100,7 @@ export const users = [
   },
   {
     id: 13,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-3',
@@ -108,7 +108,7 @@ export const users = [
   },
   {
     id: 14,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-4',
@@ -116,7 +116,7 @@ export const users = [
   },
   {
     id: 15,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-5',
@@ -124,7 +124,7 @@ export const users = [
   },
   {
     id: 16,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-6',
@@ -132,7 +132,7 @@ export const users = [
   },
   {
     id: 17,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'GD-7',
@@ -140,7 +140,7 @@ export const users = [
   },
   {
     id: 18,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -148,7 +148,7 @@ export const users = [
   },
   {
     id: 19,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -156,7 +156,7 @@ export const users = [
   },
   {
     id: 20,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -164,7 +164,7 @@ export const users = [
   },
   {
     id: 21,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -172,7 +172,7 @@ export const users = [
   },
   {
     id: 22,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -180,7 +180,7 @@ export const users = [
   },
   {
     id: 23,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -188,7 +188,7 @@ export const users = [
   },
   {
     id: 24,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -196,7 +196,7 @@ export const users = [
   },
   {
     id: 25,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -204,7 +204,7 @@ export const users = [
   },
   {
     id: 26,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -212,7 +212,7 @@ export const users = [
   },
   {
     id: 27,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -220,7 +220,7 @@ export const users = [
   },
   {
     id: 28,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -228,7 +228,7 @@ export const users = [
   },
   {
     id: 29,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -236,7 +236,7 @@ export const users = [
   },
   {
     id: 30,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -244,7 +244,7 @@ export const users = [
   },
   {
     id: 31,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -252,7 +252,7 @@ export const users = [
   },
   {
     id: 32,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -260,7 +260,7 @@ export const users = [
   },
   {
     id: 33,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -268,7 +268,7 @@ export const users = [
   },
   {
     id: 34,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -276,7 +276,7 @@ export const users = [
   },
   {
     id: 35,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -284,7 +284,7 @@ export const users = [
   },
   {
     id: 36,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -292,7 +292,7 @@ export const users = [
   },
   {
     id: 37,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -300,7 +300,7 @@ export const users = [
   },
   {
     id: 38,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -308,7 +308,7 @@ export const users = [
   },
   {
     id: 39,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -316,7 +316,7 @@ export const users = [
   },
   {
     id: 40,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -324,7 +324,7 @@ export const users = [
   },
   {
     id: 41,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',
@@ -332,7 +332,7 @@ export const users = [
   },
   {
     id: 42,
-    logo: 'logo.svg',
+    logo: 'logo.png',
     name: 'Oleg Aleksandrov',
     position: 'UX/UI Disigner',
     department: 'HR-HRM',

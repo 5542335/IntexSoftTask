@@ -7,6 +7,7 @@ interface ActiveTabProps {
 
 export const StyledTabs = styled.ul`
   display: flex;
+  position: relative;
   overflow-x: scroll;
   padding: 0;
   ::-webkit-scrollbar {
@@ -38,6 +39,7 @@ export const StyledTab = styled.li<ActiveTabProps>`
         border-radius: 2px 2px 0 0;
         position: absolute;
         bottom: -1px;
+        z-index: 10;
       }
     `}
 `;

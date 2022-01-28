@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { TableDataProps } from '../components/smart/table/TableRow';
 
 export const useFilters = (data: TableDataProps[]) => {
