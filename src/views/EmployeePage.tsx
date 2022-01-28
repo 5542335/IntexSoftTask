@@ -1,38 +1,234 @@
 import styled from 'styled-components';
-
-import { FC, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 
 import { StyledTitle, Title } from '../components/dumb/Title';
-import { Tabs, StyledTabsContainer } from '../components/dumb/Tabs';
-import { SearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
+import { Tabs, StyledTabs } from '../components/dumb/Tabs';
+import { SearchBar, StyledSearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
 import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
+import { workplace, departments, users } from '../data';
+import { StyledTable, Table } from '../components/smart/table/Table';
+import {
+  getEmployeeTableBody,
+  StyledBuildingIcon,
+  StyledChip,
+  StyledDepartmentWrapper,
+  StyledLogo,
+  StyledLogoWrapper,
+  StyledNameWrapper,
+  StyledTrashIcon,
+  StyledWorkplaceWrapper,
+  StyledText,
+} from '../components/smart/table/employeeTableBody';
+import { StyledTableItem, StyledTableRow, TableDataProps } from '../components/smart/table/TableRow';
+import { StyledTableHeader } from '../components/smart/table/TableHeader';
+import { useFilters } from '../hooks/useFilters';
+import { useSort } from '../hooks/useSort';
+import { StyledTableBodyWrapper } from '../components/smart/table/TableBody';
+import { getDepartmentFilter, getSearchTextFilter, getWorkplaceFilter } from '../components/smart/table/getFilters';
+import { Modal } from '../components/dumb/Modal';
+import { ModalContent, ModalData } from '../components/dumb/ModalContent';
 
-const StyledTitleAndTabs = styled.header`
+const StyledPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
-  ${StyledTabsContainer} {
+  margin: 111px auto 23px;
+  max-width: 1110px;
+  ${StyledTabs} {
     margin-top: 24px;
-    padding: 0 5px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #deecf9;
+  }
+  ${StyledTitle} {
+    font-size: 36px;
+    line-height: 43px;
+  }
+  ${StyledTable} {
+    margin-top: 24px;
+  }
+  ${StyledTableHeader} {
+    ${StyledTableItem} {
+      :nth-child(1) {
+        flex-basis: 236px;
+      }
+      :nth-child(2) {
+        flex-basis: 162px;
+      }
+      :nth-child(3) {
+        flex-basis: 136px;
+      }
+      :nth-child(4) {
+        flex-basis: 576px;
+      }
+    }
+  }
+  ${StyledTableBodyWrapper} {
+    ${StyledTableItem} {
+      :nth-child(1) {
+        flex-basis: 32px;
+      }
+      :nth-child(2) {
+        flex-basis: 204px;
+      }
+      :nth-child(3) {
+        flex-basis: 162px;
+      }
+      :nth-child(4) {
+        flex-basis: 136px;
+      }
+      :nth-child(5) {
+        flex-basis: 576px;
+      }
+    }
+  }
+  ${StyledLogo} {
+    margin: 12px 0;
+  }
+  ${StyledNameWrapper} {
+    margin-left: 12px;
+  }
+  ${StyledChip} {
+    margin: 3px 0;
+    :not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+  ${StyledTrashIcon} {
+    margin-left: 10px;
+  }
+
+  @media (max-width: 1110px) {
+    ${StyledTabs} {
+      padding: 0 5px;
+    }
+    ${StyledTitle} {
+      margin-left: 5px;
+    }
+    ${StyledTableRow} {
+      padding: 0 5px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    ${StyledNameWrapper} {
+      align-items: flex-start;
+      margin-top: 40px;
+      margin-left: 0;
+    }
+    ${StyledChip} {
+      padding: 8px 16px 8px 16px;
+    }
+    ${StyledDepartmentWrapper} {
+      min-width: 100px;
+    }
+    ${StyledTableRow} {
+      :not(:first-child) {
+        min-height: 80px;
+      }
+    }
+    ${StyledLogo} {
+      margin: 0;
+      align-self: flex-start;
+    }
+    ${StyledLogoWrapper} {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+    }
   }
 
   @media (max-width: 480px) {
+    margin: 15px auto 5px;
     ${StyledTitle} {
       font-size: 18px;
       line-height: 140%;
       text-align: center;
+      margin: 0;
     }
-  }
-
-  @media (min-width: 481px) and (max-width: 1110px) {
-    ${StyledTitle} {
-      margin-left: 5px;
+    ${StyledTabs} {
+      box-shadow: 0 6px 12px 0 #0000001e;
     }
-  }
-
-  @media (min-width: 1110px) {
-    ${StyledTabsContainer} {
-      padding: 0;
+    ${StyledTable} {
+      margin-top: 0;
+    }
+    ${StyledChip} {
+      margin: 8px 0 0;
+      width: 100%;
+      padding: 12px 0 12px;
+      :not(:last-child) {
+        margin-right: 0;
+      }
+      :first-child {
+        margin-top: 12px;
+      }
+    }
+    ${StyledTableRow} {
+      display: grid;
+      grid-template-rows: 22px 22px 1fr;
+      grid-template-columns: 44px 2fr 1fr;
+      padding: 16px;
+      margin: 20px 16px;
+      background-color: #fff;
+      border: 1px solid #d0e2f6;
+      box-sizing: border-box;
+      border-radius: 8px;
+      :not(:first-child) {
+        min-height: 0;
+      }
+    }
+    ${StyledTableItem} {
+      :nth-child(1) {
+        grid-row: 1 / 3;
+        grid-column: 1;
+      }
+      :nth-child(2) {
+        grid-row: 1;
+        grid-column: 2;
+      }
+      :nth-child(3) {
+        grid-row: 2;
+        grid-column: 2;
+        ${StyledText} {
+          font-size: 12px;
+          line-height: 14px;
+        }
+      }
+      :nth-child(4) {
+        grid-row: 1;
+        grid-column: 3;
+        justify-self: flex-end;
+      }
+      :nth-child(5) {
+        grid-row: 3;
+        grid-column: 1 / 4;
+        border-top: 1px solid #d0e2f6;
+        margin-top: 10px;
+      }
+    }
+    ${StyledTableHeader} {
+      display: none;
+    }
+    ${StyledNameWrapper} {
+      margin: 0;
+    }
+    ${StyledLogoWrapper} {
+      position: static;
+    }
+    ${StyledDepartmentWrapper} {
+      min-width: 0;
+    }
+    ${StyledWorkplaceWrapper} {
+      ${StyledText} {
+        font-size: 12px;
+      }
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    ${StyledTrashIcon} {
+      margin: 0 20px 0 auto;
+    }
+    ${StyledBuildingIcon} {
+      margin: 0 16px 0 20px;
     }
   }
 `;
@@ -43,90 +239,165 @@ const StyledSearchAndSelect = styled.div`
   position: relative;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   min-height: 76px;
   background-color: #f5f9fd;
   border-radius: 8px;
+  margin-top: 16px;
+  padding: 0 16px;
+  ${StyledSelect} {
+    min-width: 270px;
+    height: 48px;
+    padding: 15px 60px 15px 55px;
+    background-color: #fff;
+    border: 1px solid #d0e2f6;
+    border-radius: 8px;
+    margin-left: 16px;
+  }
+  ${StyledOptionsWrapper} {
+    top: 48px;
+  }
+
+  @media (max-width: 600px) {
+    ${StyledSelect} {
+      padding: 15px 40px 15px 35px;
+      min-width: 230px;
+    }
+  }
 
   @media (max-width: 480px) {
     flex-direction: column;
     background-color: transparent;
     align-items: flex-end;
-
+    margin-top: 0;
+    padding: 0;
+    ${StyledSelect} {
+      height: auto;
+      padding: 0;
+      min-width: 0;
+      border: none;
+      margin: 0;
+    }
+    ${StyledSearchBar} {
+      margin: 0 16px;
+    }
     ${StyledSelectWrapper} {
       margin: 28px 16px 0 0;
     }
     ${StyledOptionsWrapper} {
       top: 20px;
     }
-    ${StyledSelect} {
-      align-self: flex-start;
-    }
     ${StyledSearchBarWrapper} {
-      padding: 24px 16px;
-      border-bottom: 1px solid rgba(64, 72, 81, 0.1);
-    }
-  }
-
-  @media (min-width: 481px) {
-    margin-top: 16px;
-    padding: 0 16px;
-
-    ${StyledSelect} {
-      min-width: 270px;
-      height: 48px;
-      padding: 15px 60px 15px 55px;
-      background: #ffffff;
-      border: 1px solid #d0e2f6;
-      box-sizing: border-box;
-      border-radius: 8px;
-      margin-left: 16px;
-      @media (min-width: 481px) and (max-width: 600px) {
-        padding: 15px 40px 15px 35px;
-        min-width: 230px;
-      }
-    }
-    ${StyledOptionsWrapper} {
-      top: 48px;
+      padding: 24px 0;
+      border-bottom: 1px solid #40485119;
     }
   }
 `;
 
-const StyledPageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 111px auto 23px;
-  max-width: 1110px;
-
-  @media (max-width: 480px) {
-    margin: 15px auto 5px;
-  }
-`;
-
-const workPlace = ['All', 'Mostovaya', 'Bogutskogo', 'DNT', 'Gaspadarchaya', 'Bogdanovicha'];
-const departments = ['1', '2', '3', '4', '5', '6', '7', '8'];
+const rowsPerPage = 10;
 
 export const EmployeePage: FC = () => {
+  const defaultWorkplace = 'All';
   const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
-
-  const [currentWorkPlace, setCurrentWorkPlace] = useState(workPlace[0]);
+  const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
+  const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
   const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
+  const [offset, setOffset] = useState<number>(0);
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState<ModalData>();
+  const { filteredData, updateFilter } = useFilters(users);
+  const { sortedData, sortedField, setSortedField, setSortedData } = useSort<TableDataProps>(filteredData);
+  const employeeColumns = getEmployeeTableBody(setShowModal, setModalData);
+  const tableTitles = ['Name', 'Position', 'Department', 'Workplace'];
+
+  const onChangeWorkplace = useCallback(
+    (workplaceItem: string) => {
+      setCurrentWorkplace(workplaceItem);
+      setOffset(0);
+      updateFilter('workplace', workplaceItem !== defaultWorkplace ? getWorkplaceFilter(workplaceItem) : null);
+    },
+    [updateFilter],
+  );
+
+  const onChangeDepartment = useCallback(
+    (department: string) => {
+      setCurrentSelectDep(department);
+      setOffset(0);
+      updateFilter('department', department !== selectButtonText ? getDepartmentFilter(department) : null);
+    },
+    [selectButtonText, updateFilter],
+  );
+
+  const onChangeSearchText = useCallback(
+    (text: string) => {
+      setOffset(0);
+      updateFilter('searchText', text ? getSearchTextFilter(text) : null);
+    },
+    [updateFilter],
+  );
+
+  const handleSort = useCallback(
+    (title: string) => () => {
+      if (sortedField.field) {
+        setSortedField({ field: title.toLowerCase(), order: `${sortedField.order === 'ASC' ? 'DESC' : 'ASC'}` });
+      } else {
+        setSortedField({ field: title.toLowerCase(), order: 'ASC' });
+      }
+    },
+    [setSortedField, sortedField.field, sortedField.order],
+  );
+
+  const paginatedData = useMemo(() => {
+    return sortedData?.slice(offset, rowsPerPage + offset);
+  }, [sortedData, offset]);
+
+  const handleCloseModal = useCallback(() => {
+    setShowModal(false);
+    setModalData({ id: 0, logo: '', name: '', workplace: '' });
+  }, []);
+
+  const handleDeleteChip = useCallback(() => {
+    const newSortedData = sortedData?.map((user) => {
+      if (user.id === modalData?.id) {
+        const index = user.workplace.indexOf(modalData?.workplace as string);
+        user.workplace.splice(index, 1);
+        return user;
+      }
+      return user;
+    });
+    setSortedData(newSortedData);
+    setModalData({ id: 0, logo: '', name: '', workplace: '' });
+    setShowModal(false);
+  }, [modalData, setSortedData, sortedData]);
 
   return (
     <StyledPageWrapper>
-      <StyledTitleAndTabs>
-        <Title />
-        <Tabs tabs={workPlace} activeTab={currentWorkPlace} onChange={setCurrentWorkPlace} />
-      </StyledTitleAndTabs>
+      <Title>{titleText}</Title>
+      <Tabs tabs={workplace} activeTab={currentWorkplace} onChange={onChangeWorkplace} />
       <StyledSearchAndSelect>
-        <SearchBar />
+        <SearchBar defaultInputValue="Search of employees" onChangeText={onChangeSearchText} />
         <Select
           currentSelect={currentSelectDep}
           items={departments}
-          onChange={setCurrentSelectDep}
+          onChange={onChangeDepartment}
           selectButtonText={selectButtonText}
         />
       </StyledSearchAndSelect>
+      <Table
+        data={paginatedData}
+        columns={employeeColumns}
+        columnTitles={tableTitles}
+        paginationProps={{ offset, setOffset, rowsPerPage, totalRows: filteredData.length }}
+        onSort={handleSort}
+        sortedField={sortedField}
+      />
+      <Modal isActive={showModal} onClick={handleCloseModal}>
+        <ModalContent
+          modalText="Are you sure you want to remove booking of employee?"
+          modalData={modalData}
+          onClose={handleCloseModal}
+          onDelete={handleDeleteChip}
+        />
+      </Modal>
     </StyledPageWrapper>
   );
 };

@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'jsx-a11y', 'prettier'],
   rules: {
+    'react/no-array-index-key': 'off',
     'prettier/prettier': [
       2,
       {
@@ -58,6 +59,10 @@ module.exports = {
       },
     ],
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
+    'react/display-name': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
+    'no-unused-vars': 'off',
+    'react/jsx-props-no-spreading': 0,
     'react/function-component-definition': [
       2,
       {
@@ -87,4 +92,13 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'no-undef': 0,
+        'react/no-array-index-key': 0,
+      },
+    },
+  ],
 };

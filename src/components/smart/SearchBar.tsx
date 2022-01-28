@@ -1,23 +1,28 @@
 import React, { ChangeEvent, FC, useCallback, useState } from 'react';
 import styled from 'styled-components';
+
 import { StyledLoader } from '../dumb/Loader';
 
-const StyledSearchIcon = styled.img`
+interface SearchBarProps {
+  defaultInputValue: string;
+  onChangeText: (text: string) => void;
+}
+
+const StyledSearchIcon = styled.div`
   width: 24px;
   height: 24px;
+  background-image: url('./search.svg');
+  background-repeat: no-repeat;
 `;
 
 const StyledLabel = styled.label`
   cursor: pointer;
 `;
 
-export const StyledInput = styled.input`
-  font-family: Lato, Arial, sans-serif;
-  font-style: normal;
+const StyledInput = styled.input`
   font-size: 14px;
   line-height: 130%;
-  letter-spacing: 0.02em;
-
+  font-weight: 500;
   width: 100%;
   height: 30px;
   outline: none;
@@ -30,11 +35,10 @@ export const StyledSearchBar = styled.div`
   align-items: center;
   width: 100%;
   height: 48px;
-  background-color: #ffffff;
+  background-color: #fff;
   border: 1px solid #d0e2f6;
   box-sizing: border-box;
   border-radius: 8px;
-
   ${StyledSearchIcon} {
     margin: 0 8px 0 16px;
   }
@@ -46,32 +50,32 @@ export const StyledSearchBar = styled.div`
 export const StyledSearchBarWrapper = styled.div`
   display: flex;
   width: 100%;
-  box-sizing: border-box;
 `;
 
-export const SearchBar: FC = () => {
-  const [, setSearchText] = useState('');
+export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue, onChangeText }) => {
   const [showLoader, setShowLoader] = useState(false);
 
-  const handleInput = useCallback(({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(value);
+  const handleInput = useCallback(
+    ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+      onChangeText(value);
 
-    if (value.length >= 3) {
-      setShowLoader(true);
-      setTimeout(() => {
-        console.log(value);
-        setShowLoader(false);
-      }, 1000);
-    }
-  }, []);
+      if (value.length >= 3) {
+        setShowLoader(true);
+        setTimeout(() => {
+          setShowLoader(false);
+        }, 1000);
+      }
+    },
+    [onChangeText],
+  );
 
   return (
     <StyledSearchBarWrapper>
       <StyledSearchBar>
         <StyledLabel htmlFor="search-input">
-          <StyledSearchIcon src="search.svg" alt="search icon" />
+          <StyledSearchIcon />
         </StyledLabel>
-        <StyledInput id="search-input" maxLength={60} onChange={handleInput} placeholder="Search of employees" />
+        <StyledInput id="search-input" onChange={handleInput} placeholder={defaultInputValue} />
         {showLoader && <StyledLoader />}
       </StyledSearchBar>
     </StyledSearchBarWrapper>

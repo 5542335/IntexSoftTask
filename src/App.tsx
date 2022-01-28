@@ -2,7 +2,13 @@ import { createGlobalStyle } from 'styled-components';
 import { EmployeePage } from './views/EmployeePage';
 
 const GlobalStyle = createGlobalStyle`
-  body {
+  * {
+    font-family: Lato, Arial, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+  body, p {
     margin: 0;
   }
   html {
