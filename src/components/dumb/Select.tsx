@@ -1,14 +1,12 @@
 import { FC, useCallback, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-interface ArrowIconProps {
-  rotateImg: boolean;
-}
+import arrowDown from '../icons/arrowDown.svg';
 
-const StyledArrowIcon = styled.div<ArrowIconProps>`
+const StyledArrowIcon = styled.div<{ rotateImg: boolean }>`
   width: 12px;
   height: 8px;
-  background-image: url('./arrowDown.svg');
+  background-image: url(${arrowDown});
   margin-left: 10px;
   animation: ${(props) => props.rotateImg && 'rotate 0.5s forwards'};
   @keyframes rotate {
@@ -73,22 +71,36 @@ export const StyledSelectWrapper = styled.div`
   position: relative;
 `;
 
+export const StyledCurrentSelectWrapper = styled.div<{ isActive: boolean | any }>`
+  ${(props) =>
+    props.isActive &&
+    css`
+      :before {
+        content: 'Choose department';
+
+        @media (max-width: 480px) {
+          content: 'Department';
+        }
+      }
+    `}
+`;
+
 interface SelectProps {
   currentSelect: string;
   items: string[];
   onChange: (value: string) => void;
-  selectButtonText: string;
+  defaultWorkplace: string;
 }
 
-export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, selectButtonText }) => {
+export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, defaultWorkplace }) => {
   const [isOpenOptions, setIsOpenOptions] = useState(false);
 
   const handleClickOption = useCallback(
     (selectedOption: string) => () => {
-      onChange(selectedOption || selectButtonText);
+      onChange(selectedOption);
       setIsOpenOptions(false);
     },
-    [onChange, selectButtonText],
+    [onChange],
   );
 
   const handleOpenOptions = useCallback(() => {
@@ -108,12 +120,12 @@ export const Select: FC<SelectProps> = ({ currentSelect, items, onChange, select
   return (
     <StyledSelectWrapper>
       <StyledSelect onClick={handleOpenOptions}>
-        {currentSelect}
+        <StyledCurrentSelectWrapper isActive={!currentSelect}>{currentSelect}</StyledCurrentSelectWrapper>
         <StyledArrowIcon rotateImg={isOpenOptions} />
       </StyledSelect>
       <StyledOptionsWrapper hidden={!isOpenOptions}>
-        {currentSelect !== selectButtonText && isOpenOptions && (
-          <StyledOption onClick={handleClickOption('')}>All</StyledOption>
+        {isOpenOptions && currentSelect && (
+          <StyledOption onClick={handleClickOption('')}>{defaultWorkplace}</StyledOption>
         )}
         {isOpenOptions && options}
       </StyledOptionsWrapper>

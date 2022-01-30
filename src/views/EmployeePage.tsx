@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FC, useCallback, useMemo, useState } from 'react';
 
-import { StyledTitle, Title } from '../components/dumb/Title';
+import Title, { StyledTitle } from '../components/dumb/Title';
 import { Tabs, StyledTabs } from '../components/dumb/Tabs';
 import { SearchBar, StyledSearchBar, StyledSearchBarWrapper } from '../components/smart/SearchBar';
 import { Select, StyledSelectWrapper, StyledSelect, StyledOptionsWrapper } from '../components/dumb/Select';
@@ -27,6 +27,7 @@ import { StyledTableBodyWrapper } from '../components/smart/table/TableBody';
 import { getDepartmentFilter, getSearchTextFilter, getWorkplaceFilter } from '../components/smart/table/getFilters';
 import { Modal } from '../components/dumb/Modal';
 import { ModalContent, ModalData } from '../components/dumb/ModalContent';
+import { useWindowWidth } from '../hooks/useWindowWidth';
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -34,9 +35,8 @@ const StyledPageWrapper = styled.div`
   margin: 111px auto 23px;
   max-width: 1110px;
   ${StyledTabs} {
-    margin-top: 24px;
+    margin-top: 32px;
     margin-bottom: 0;
-    border-bottom: 1px solid #deecf9;
   }
   ${StyledTitle} {
     font-size: 36px;
@@ -94,6 +94,9 @@ const StyledPageWrapper = styled.div`
   }
   ${StyledTrashIcon} {
     margin-left: 10px;
+  }
+  ${StyledBuildingIcon} {
+    display: none;
   }
 
   @media (max-width: 1110px) {
@@ -155,6 +158,7 @@ const StyledPageWrapper = styled.div`
       margin: 0;
     }
     ${StyledTabs} {
+      margin-top: 24px;
       box-shadow: 0 6px 12px 0 #0000001e;
     }
     ${StyledTable} {
@@ -194,7 +198,7 @@ const StyledPageWrapper = styled.div`
         grid-row: 1;
         grid-column: 2;
         ${StyledText} {
-          width: 160px;
+          max-width: 140px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -247,6 +251,7 @@ const StyledPageWrapper = styled.div`
       margin: 0 20px 0 auto;
     }
     ${StyledBuildingIcon} {
+      display: block;
       margin: 0 16px 0 20px;
     }
   }
@@ -313,13 +318,13 @@ const StyledSearchAndSelect = styled.div`
 `;
 
 const rowsPerPage = 10;
+const defaultWorkplace = 'All';
 
 export const EmployeePage: FC = () => {
-  const defaultWorkplace = 'All';
-  const selectButtonText = window.innerWidth > 480 ? 'Choose department' : 'Department';
-  const titleText = window.innerWidth > 480 ? 'List of employees' : 'Employees list';
+  const windowWidth = useWindowWidth();
+  const titleText = windowWidth > 480 ? 'List of employees' : 'Employees list';
   const [currentWorkplace, setCurrentWorkplace] = useState(defaultWorkplace);
-  const [currentSelectDep, setCurrentSelectDep] = useState(selectButtonText);
+  const [currentSelectDep, setCurrentSelectDep] = useState('');
   const [offset, setOffset] = useState<number>(0);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState<ModalData>();
@@ -341,9 +346,9 @@ export const EmployeePage: FC = () => {
     (department: string) => {
       setCurrentSelectDep(department);
       setOffset(0);
-      updateFilter('department', department !== selectButtonText ? getDepartmentFilter(department) : null);
+      updateFilter('department', department ? getDepartmentFilter(department) : null);
     },
-    [selectButtonText, updateFilter],
+    [updateFilter],
   );
 
   const onChangeSearchText = useCallback(
@@ -356,7 +361,9 @@ export const EmployeePage: FC = () => {
 
   const handleSort = useCallback(
     (title: string) => () => {
-      if (sortedField.field) {
+      if (sortedField.order === 'DESC' && sortedField.field === title.toLowerCase()) {
+        setSortedField({ field: '', order: '' });
+      } else if (sortedField.field === title.toLowerCase()) {
         setSortedField({ field: title.toLowerCase(), order: `${sortedField.order === 'ASC' ? 'DESC' : 'ASC'}` });
       } else {
         setSortedField({ field: title.toLowerCase(), order: 'ASC' });
@@ -398,7 +405,7 @@ export const EmployeePage: FC = () => {
           currentSelect={currentSelectDep}
           items={departments}
           onChange={onChangeDepartment}
-          selectButtonText={selectButtonText}
+          defaultWorkplace={defaultWorkplace}
         />
       </StyledSearchAndSelect>
       <Table

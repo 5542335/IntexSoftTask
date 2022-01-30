@@ -1,6 +1,9 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import styled from 'styled-components';
 
+import x from '../icons/x.svg';
+import modalImage from '../icons/modalImage.svg';
+
 export interface ModalData {
   id: number | string | any;
   logo: string;
@@ -20,7 +23,7 @@ const StyledModalImage = styled.div`
   position: relative;
   height: 100px;
   width: 100%;
-  background-image: url('./modalImage.svg');
+  background-image: url(${modalImage});
   background-repeat: no-repeat;
   border-radius: 6px 6px 0 0;
 `;
@@ -34,7 +37,7 @@ const StyledClose = styled.button.attrs({ type: 'button' })`
   top: 24px;
   width: 16px;
   height: 16px;
-  background-image: url('./x.svg');
+  background-image: url(${x});
   background-color: transparent;
   background-repeat: no-repeat;
   border: none;

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import searchIcon from '../icons/search.svg';
 import { StyledLoader } from '../dumb/Loader';
 import { useDebounce } from '../../hooks/useDebounce';
 
@@ -12,7 +13,7 @@ interface SearchBarProps {
 const StyledSearchIcon = styled.div`
   width: 24px;
   height: 24px;
-  background-image: url('./search.svg');
+  background-image: url(${searchIcon});
   background-repeat: no-repeat;
 `;
 
@@ -66,7 +67,6 @@ export const SearchBar: FC<SearchBarProps> = ({ defaultInputValue, onChangeText 
     if (debouncedText.length >= 3) {
       setShowLoader(true);
       setTimeout(() => {
-        console.log(debouncedText);
         setShowLoader(false);
       }, 1000);
     }

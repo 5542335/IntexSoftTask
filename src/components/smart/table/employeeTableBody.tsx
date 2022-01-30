@@ -2,6 +2,8 @@ import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 import { ModalData } from '../../dumb/ModalContent';
+import trash from '../../icons/trash.svg';
+import building from '../../icons/building.svg';
 
 interface StyledTextProps {
   textColor?: string;
@@ -15,7 +17,11 @@ export const StyledText = styled.p<StyledTextProps>`
   margin: 0;
 `;
 
-export const StyledLogo = styled.img`
+export const StyledLogo = styled.div<{ bgImage: string }>`
+  background-image: url(${(props) => props.bgImage});
+  background-repeat: no-repeat;
+  width: 32px;
+  height: 32px;
   border-radius: 16px;
 `;
 
@@ -26,12 +32,13 @@ export const StyledChipIcon = styled.div`
 export const StyledBuildingIcon = styled(StyledChipIcon)`
   width: 18px;
   height: 18px;
-  background-image: url('building.svg');
+  background-image: url(${building});
 `;
+
 export const StyledTrashIcon = styled(StyledChipIcon)`
   width: 14px;
   height: 18px;
-  background-image: url('trash.svg');
+  background-image: url(${trash});
 `;
 
 const StyledItemWrapper = styled.div`
@@ -60,7 +67,7 @@ export const getEmployeeTableBody = (
 ) => {
   const UserLogoItem = ({ logo }: { logo: string }) => (
     <StyledLogoWrapper>
-      <StyledLogo src={logo} alt="logo icon" />
+      <StyledLogo bgImage={logo} />
     </StyledLogoWrapper>
   );
 
@@ -93,7 +100,7 @@ export const getEmployeeTableBody = (
           workplace.map((wplace: string) => {
             return (
               <StyledChip key={wplace}>
-                {window.innerWidth < 480 && <StyledBuildingIcon />}
+                <StyledBuildingIcon />
                 <StyledText textColor="#3386D9">{wplace}</StyledText>
                 <StyledTrashIcon onClick={handleDeleteChip(wplace)} />
               </StyledChip>

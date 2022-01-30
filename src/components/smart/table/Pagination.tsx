@@ -2,6 +2,10 @@ import { FC, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 
 import { StyledText } from './employeeTableBody';
+import leftEndArrow from '../../icons/leftEndArrow.svg';
+import leftArrow from '../../icons/leftArrow.svg';
+import rightArrow from '../../icons/rightArrow.svg';
+import rightEndArrow from '../../icons/rightEndArrow.svg';
 
 export interface PaginationProps {
   paginationProps: any;
@@ -69,10 +73,10 @@ export const Pagination: FC<PaginationProps> = ({ paginationProps }) => {
       <StyledText>{`${totalRows ? offset + 1 : offset} - ${
         offset + rowsPerPage >= totalRows ? totalRows : offset + rowsPerPage
       } of ${totalRows}`}</StyledText>
-      <StyledArrowButton disabled={offset === 0} id="first-page" bgImage="leftEndArrow.svg" />
-      <StyledArrowButton disabled={offset === 0} id="prev-page" bgImage="leftArrow.svg" />
-      <StyledArrowButton disabled={offset + rowsPerPage >= totalRows} id="next-page" bgImage="rightArrow.svg" />
-      <StyledArrowButton disabled={offset + rowsPerPage >= totalRows} id="last-page" bgImage="rightEndArrow.svg" />
+      <StyledArrowButton disabled={offset === 0} id="first-page" bgImage={leftEndArrow} />
+      <StyledArrowButton disabled={offset === 0} id="prev-page" bgImage={leftArrow} />
+      <StyledArrowButton disabled={offset + rowsPerPage >= totalRows} id="next-page" bgImage={rightArrow} />
+      <StyledArrowButton disabled={offset + rowsPerPage >= totalRows} id="last-page" bgImage={rightEndArrow} />
     </StyledPagination>
   );
 };

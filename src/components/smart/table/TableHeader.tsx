@@ -13,8 +13,8 @@ export interface TableHeaderProps {
 
 export const StyledTableHeader = styled.div``;
 
-export const TableHeader: FC<TableHeaderProps> = ({ columnTitles, onSort }) => {
-  const headerItems = columnTitles.map((title) => titleContent(title, onSort));
+export const TableHeader: FC<TableHeaderProps> = ({ columnTitles, onSort, sortedField }) => {
+  const headerItems = columnTitles.map((title) => titleContent(title, sortedField, onSort));
   return (
     <StyledTableHeader>
       <TableRow columns={headerItems} />

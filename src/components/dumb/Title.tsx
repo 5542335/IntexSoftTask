@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import styled from 'styled-components';
 
 interface TitleProps {
@@ -10,3 +10,5 @@ export const StyledTitle = styled.p``;
 export const Title: FC<TitleProps> = ({ children }) => {
   return <StyledTitle>{children}</StyledTitle>;
 };
+
+export default memo(Title);

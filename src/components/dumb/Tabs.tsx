@@ -1,10 +1,6 @@
 import { FC } from 'react';
 import styled, { css } from 'styled-components';
 
-interface ActiveTabProps {
-  isActive?: boolean;
-}
-
 export const StyledTabs = styled.ul`
   display: flex;
   position: relative;
@@ -15,7 +11,7 @@ export const StyledTabs = styled.ul`
   }
 `;
 
-export const StyledTab = styled.li<ActiveTabProps>`
+export const StyledTab = styled.li<{ isActive?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,10 +34,22 @@ export const StyledTab = styled.li<ActiveTabProps>`
         background: #3386d9;
         border-radius: 2px 2px 0 0;
         position: absolute;
-        bottom: -1px;
-        z-index: 10;
+        bottom: 0;
+        z-index: 1;
       }
     `}
+`;
+
+const StyledUnderline = styled.div`
+  height: 1px;
+  background: #deecf9;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+`;
+
+const StyledTabsWrapper = styled.div`
+  position: relative;
 `;
 
 interface TabsProps {
@@ -56,14 +64,17 @@ export const Tabs: FC<TabsProps> = ({ tabs, activeTab, onChange }) => {
   };
 
   return (
-    <StyledTabs>
-      {tabs.map((tab) => {
-        return (
-          <StyledTab key={tab} onClick={handleClickTab(tab)} isActive={activeTab === tab}>
-            {tab}
-          </StyledTab>
-        );
-      })}
-    </StyledTabs>
+    <StyledTabsWrapper>
+      <StyledTabs>
+        {tabs.map((tab) => {
+          return (
+            <StyledTab key={tab} onClick={handleClickTab(tab)} isActive={activeTab === tab}>
+              {tab}
+            </StyledTab>
+          );
+        })}
+      </StyledTabs>
+      <StyledUnderline />
+    </StyledTabsWrapper>
   );
 };
