@@ -1,12 +1,24 @@
 {
   "files": {
-    "main.js": "/IntexSoftTask/static/js/main.f7b0ce1e.js",
+    "main.js": "/IntexSoftTask/static/js/main.1971edb6.js",
     "static/js/787.b8dc52ca.chunk.js": "/IntexSoftTask/static/js/787.b8dc52ca.chunk.js",
+    "static/media/modalImage.svg": "/IntexSoftTask/static/media/modalImage.369c07428d3f7ceb05054654822c4ba2.svg",
     "index.html": "/IntexSoftTask/index.html",
-    "main.f7b0ce1e.js.map": "/IntexSoftTask/static/js/main.f7b0ce1e.js.map",
+    "static/media/sortArrowsASC.svg": "/IntexSoftTask/static/media/sortArrowsASC.24559c229600eb6cef1a80af94a6bda3.svg",
+    "static/media/sortArrowsDESC.svg": "/IntexSoftTask/static/media/sortArrowsDESC.dff6dd6ecf56634ba6100ddf182045ff.svg",
+    "static/media/building.svg": "/IntexSoftTask/static/media/building.95dee7a9c814583b648f9b63d26797f7.svg",
+    "static/media/leftEndArrow.svg": "/IntexSoftTask/static/media/leftEndArrow.cd985ce642144d9a1de31b4e9368176e.svg",
+    "static/media/rightEndArrow.svg": "/IntexSoftTask/static/media/rightEndArrow.8f023c16251b0f3b7ac7b8dbb22913ca.svg",
+    "static/media/search.svg": "/IntexSoftTask/static/media/search.8251e08627a8362a9e36a679b16264ff.svg",
+    "static/media/trash.svg": "/IntexSoftTask/static/media/trash.ff2a500adb92bc587125270cc3ae97b8.svg",
+    "static/media/rightArrow.svg": "/IntexSoftTask/static/media/rightArrow.52b042fc286fbaf0db41a5a40d6f3d39.svg",
+    "static/media/leftArrow.svg": "/IntexSoftTask/static/media/leftArrow.40c1faa8ec2b95b8ee6b41e6e1faa2c7.svg",
+    "static/media/arrowDown.svg": "/IntexSoftTask/static/media/arrowDown.7021991243521d69dc88805693eaf493.svg",
+    "static/media/x.svg": "/IntexSoftTask/static/media/x.d0cffc1baed33f9cbbe75dee32342169.svg",
+    "main.1971edb6.js.map": "/IntexSoftTask/static/js/main.1971edb6.js.map",
     "787.b8dc52ca.chunk.js.map": "/IntexSoftTask/static/js/787.b8dc52ca.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.f7b0ce1e.js"
+    "static/js/main.1971edb6.js"
   ]
 }
